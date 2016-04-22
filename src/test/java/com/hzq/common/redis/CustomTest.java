@@ -5,7 +5,7 @@ import redis.clients.jedis.JedisPool;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
+/**w
  * Created by hzq on 16/4/22.
  */
 public class CustomTest {

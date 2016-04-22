@@ -16,10 +16,8 @@ import redis.clients.jedis.Jedis;
 @ContextConfiguration(locations = {"classpath:applicationContext-spring.xml"})
 public class RedisHelperTest extends AbstractJUnit4SpringContextTests {
 
-
     @Test
     public void check() {
-
         Jedis jedis = RedisHelper.getJedis();
         jedis.set("key1", "hzq");
         System.out.println("12");

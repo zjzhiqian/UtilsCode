@@ -18,7 +18,6 @@
 	</context:component-scan>
 
 
-
 	<context:property-placeholder/>
 
 </beans>
