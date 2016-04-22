@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
+
 /**
  * Created by hzq on 16/4/21.
  */
@@ -14,7 +15,7 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value = "/test")
-    public Date getById(){
+    public Date getById() {
         return new Date();
     }
 }
