@@ -58,6 +58,5 @@
 
     <aop:config proxy-target-class="true"></aop:config>
     <aop:aspectj-autoproxy/>
-    <!-- Shiro注解提供支持 -->
 
 </beans>

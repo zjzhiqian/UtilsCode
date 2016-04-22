@@ -1,7 +1,7 @@
 # UtilsCode
-stores some common code  and favorite code
+stores some common code  and favorite code 
 
 
 
-#redis code
+1.redis code
 
