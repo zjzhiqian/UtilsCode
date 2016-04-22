@@ -1,4 +1,4 @@
-package com.hzq.common.util;
+package com.hzq.common.redis;
 
 import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
