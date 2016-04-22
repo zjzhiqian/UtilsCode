@@ -25,11 +25,8 @@ public class RedisHelper {
         RedisHelper.jedisFactory = jedisFactory;
     }
 
-    //  public static final Jedis jedis = new Jedis("127.0.0.1");
-
     public static Jedis getJedis() {
         return jedisFactory.getObject();
-//        return jedis;
     }
 
 
