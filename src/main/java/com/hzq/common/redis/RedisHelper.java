@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.exceptions.JedisException;
 
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 
-@Service
+//@Component
 public class RedisHelper {
 
     private static Logger logger = LoggerFactory.getLogger(RedisHelper.class);
@@ -22,7 +22,7 @@ public class RedisHelper {
 
     @Autowired
     private void setJedisFactory(ObjectFactory<Jedis> jedisFactory) {
-        RedisHelper.jedisFactory = jedisFactory;
+        this.jedisFactory = jedisFactory;
     }
 
     public static Jedis getJedis() {
@@ -374,8 +374,8 @@ public class RedisHelper {
         }
     }
 
-    public static boolean expire(String key, int seconds){
-        return expire(0,key,seconds);
+    public static boolean expire(String key, int seconds) {
+        return expire(0, key, seconds);
     }
 
     public static boolean expire(int dataSource, String key, int seconds) {
@@ -397,7 +397,7 @@ public class RedisHelper {
 
 
     public static boolean hexists(String key, String field) {
-        return hexists(0,key,field);
+        return hexists(0, key, field);
     }
 
     public static boolean hexists(int dataSource, String key, String field) {
@@ -418,9 +418,8 @@ public class RedisHelper {
     }
 
 
-
-    public static boolean delKeys(String key){
-        return delKeys(0,key);
+    public static boolean delKeys(String key) {
+        return delKeys(0, key);
     }
 
     public static boolean delKeys(int dataSource, String key) {

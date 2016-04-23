@@ -1,17 +1,11 @@
 package com.hzq.common.redis;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.WebApplicationObjectSupport;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -21,8 +15,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @PropertySource("classpath:redis.properties")
-public class RedisConfiguration{
-
+public class RedisConfiguration {
     /**
      * redis IP.
      */
@@ -73,6 +66,7 @@ public class RedisConfiguration{
 
     /**
      * 初始化.
+     *
      * @return 返回JedisPoolConfig
      */
     @Bean
@@ -88,22 +82,24 @@ public class RedisConfiguration{
 
     /**
      * 设置范围.
+     *
      * @return jedis
      */
     @Bean
     @Scope("prototype")
     @Autowired
     public Jedis jedis(JedisPool jedisPool) {
-        return  jedisPool.getResource();
+        return jedisPool.getResource();
     }
 
     /**
      * 获取JedisPool.
+     *
      * @return JedisPool
      */
     @Bean
     public JedisPool jedisPool() {
-        if (password == null || "".equals(password)){
+        if (password == null || "".equals(password)) {
             return new JedisPool(jedisPoolConfig(), host, port, 0);
         } else {
             return new JedisPool(jedisPoolConfig(), host, port, 0, password);

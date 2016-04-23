@@ -10,23 +10,40 @@
 
 
     <repositories>
+        <!--<repository>-->
+        <!--<id>central</id>-->
+        <!--<name>Maven Repository Switchboard</name>-->
+        <!--<layout>default</layout>-->
+        <!--<url>http://mvnrepository.com/</url>-->
+        <!--<snapshots>-->
+        <!--<enabled>false</enabled>-->
+        <!--</snapshots>-->
+        <!--</repository>-->
+
+
         <repository>
             <id>central</id>
-            <name>Maven Repository Switchboard</name>
+            <name>Central Repository</name>
+            <url>http://repo.maven.apache.org/maven2</url>
             <layout>default</layout>
-            <url>http://mvnrepository.com/</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-    </repositories>
 
+    </repositories>
 
 
     <properties>
         <spring-version>4.2.5.RELEASE</spring-version>
         <jackson-version>2.7.3</jackson-version>
-
+        <commons-log-version>1.2</commons-log-version>
+        <slf4j-version>1.7.12</slf4j-version>
+        <fastjson-version>1.2.6</fastjson-version>
+        <redis-spring-data-version>1.7.1.RELEASE</redis-spring-data-version>
+        <redis-clients-version>2.6.2</redis-clients-version>
+        <junit-version>4.11</junit-version>
+        <minjdk-version>1.8</minjdk-version>
     </properties>
 
 
@@ -107,8 +124,8 @@
             <version>${spring-version}</version>
         </dependency>
 
-        <!--jackson-->
 
+        <!--jackson-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -127,6 +144,7 @@
             <version>${jackson-version}</version>
         </dependency>
 
+
         <!--aspectj-->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -135,58 +153,45 @@
         </dependency>
 
 
-
+        <!--slf4j-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j-version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>${slf4j-version}</version>
+        </dependency>
+
 
         <!--redis -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.6</version>
+            <version>${fastjson-version}</version>
         </dependency>
-
 
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>2.6.2</version>
+            <version>${redis-clients-version}</version>
         </dependency>
 
-        <!-- spring-redis -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>1.7.1.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                </exclusion>
-            </exclusions>
+            <version>${redis-spring-data-version}</version>
         </dependency>
 
-        <!--test-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring-version}</version>
-        </dependency>
 
+        <!--commons-logging-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>${commons-log-version}</version>
         </dependency>
 
 
@@ -195,17 +200,15 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring-version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit-version}</version>
             <scope>test</scope>
         </dependency>
-
-
-
 
 
     </dependencies>
@@ -218,8 +221,8 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
+                        <source>${minjdk-version}</source>
+                        <target>${minjdk-version}</target>
                     </configuration>
                 </plugin>
                 <plugin>

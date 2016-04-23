@@ -2,13 +2,19 @@ package com.hzq.common.redis;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.clients.jedis.Jedis;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+
 /**
- * Created by hzq on 16/4/21.
+ * Created by hzq on 15/6/21.
  */
 
 
@@ -16,56 +22,60 @@ import redis.clients.jedis.Jedis;
 @ContextConfiguration(locations = {"classpath:applicationContext-spring.xml"})
 public class RedisHelperTest extends AbstractJUnit4SpringContextTests {
 
+    @Autowired
+    private RedisLock lockRedis;
+
+    private static ExecutorService service;
+    private static Integer tryCount = 0;
+
     @Test
     public void check() {
-        Jedis jedis = RedisHelper.getJedis();
-        jedis.set("key1", "hzq");
-        System.out.println("12");
+
+        service = Executors.newFixedThreadPool(3);
+        while (true) {
+            for (int i = 0; i < 2; i++) {
+                service.execute(new Task());
+            }
+            service.shutdown();
+            while (!service.isTerminated()) {
+
+            }
+            reInit();
+        }
+    }
+
+    /**
+     * 重新初始化
+     */
+    public void reInit() {
+        service = Executors.newFixedThreadPool(3);
+        System.out.println("tryCount: " + ++tryCount);
+    }
+
+
+    private class Task implements Runnable {
+        @Override
+        public void run() {
+//            Object obj = lockRedis.Handle("key", 300L, new CallBackFun<Object>() {
+//                @Override
+//                public Object invoke() {
+//                    try {
+//                        TimeUnit.SECONDS.sleep(10);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    return "123";
+//                }
+//            });
+            String obj = lockRedis.Handle("key", 300L, new Function<Jedis, String>() {
+                @Override
+                public String apply(Jedis o) {
+                    return "123";
+                }
+            });
+            System.out.println(obj);
+        }
     }
 
 
 }
-
-
-
-
-
-
-
-
-
-
-//    @Override
-//    public <T> T lockDo(String key, long timeoutMilliseconds, LockCallBack<T> lockCallBack) {
-//        try {
-//            if(!this.isLocked(key)){
-//                return lockCallBack.invoke();
-//            }else{
-//                Timeout timeout = new Timeout(timeoutMilliseconds);
-//                while(!timeout.isTimeout()){
-//                    if(!this.isLocked(key)){
-//                        return lockCallBack.invoke();
-//                    }
-//                }
-//            }
-//            return null;
-//        } finally {
-//            this.del(Lock.generateLockKey(key));
-//        }
-//    }
-//
-//    /**
-//     * true:被锁
-//     * false:没有被锁
-//     */
-//    @Override
-//    public Boolean isLocked(String key) {
-//        long result = super.setnx(Lock.generateLockKey(key), Lock.generateRandomValue(key));
-//        //不存在锁
-//        if(result == 1){
-//            super.pexpire(Lock.generateLockKey(key), Lock.DEFAULT_LOCK_EXPIRE_MILLISENCONDS);
-//            return false;
-//        }else{
-//            return true;
-//        }
-//    }

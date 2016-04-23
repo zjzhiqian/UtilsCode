@@ -21,6 +21,12 @@ public class RedisHelper2 {
 
     private static ObjectFactory<Jedis> jedisFactory;
 
+    @Autowired
+    private void setJedisFactory(ObjectFactory<Jedis> jedisFactory) {
+        RedisHelper2.jedisFactory = jedisFactory;
+    }
+
+
     /**
      * 装饰器封装获取连接池对象，释放连接
      *
@@ -169,7 +175,7 @@ public class RedisHelper2 {
      * @param value      String类型值
      * @return 0 不存在，1 设置成功且存在
      */
-    public static Long setNx(final int dataSource, final String key, final String value){
+    public static Long setNx(final int dataSource, final String key, final String value) {
         return execute(dataSource, jedis -> (jedis.setnx(key, value)));
     }
 
@@ -183,7 +189,7 @@ public class RedisHelper2 {
      * @param value      Object类型值,然后做fastjson转换为string
      * @return 0 不存在，1 设置成功且存在
      */
-    public static Long setNx(final int dataSource, final String key, final Object value){
+    public static Long setNx(final int dataSource, final String key, final Object value) {
         return execute(dataSource, jedis -> (jedis.setnx(key, JSON.toJSONString(value))));
     }
 
@@ -406,10 +412,6 @@ public class RedisHelper2 {
         scanBatch(dataSource, new ScanParams().match(pattern), (jedis, list) -> jedis.del(list.toArray(new String[list.size()])));
     }
 
-    @Autowired
-    private void setJedisFactory(ObjectFactory<Jedis> jedisFactory) {
-        RedisHelper2.jedisFactory = jedisFactory;
-    }
 
     /**
      * 通道调用示例
