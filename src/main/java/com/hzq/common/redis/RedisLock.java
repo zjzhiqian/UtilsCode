@@ -27,7 +27,8 @@ public class RedisLock {
     }
 
     /**
-     * 设为pubic 如果有需要不用封装的话
+     * 设为pubic 如果有需要不用封装,直接用这个方法获取Jedis
+     *
      * @return
      */
     public Jedis getJedis() {
@@ -37,7 +38,7 @@ public class RedisLock {
     /**
      * 进行操作的上锁时长,3s
      */
-    private static final Long DEFAULT_LOCK_EXPIRE_MILLISENCONDS = 6000L;
+    private static final Long DEFAULT_LOCK_EXPIRE = 6000L;
 
     /**
      * 上锁时,尝试获取锁的间隔时间,0.1s
@@ -49,7 +50,7 @@ public class RedisLock {
      */
     private final Long LOCK_WAIT_TIMA_OUT = 10000L;
 
-    public <R> R Handle(String key, Function<Jedis,R> callBackFun) {
+    public <R> R Handle(String key, Function<Jedis, R> callBackFun) {
         return Handle(key, LOCK_WAIT_TIMA_OUT, callBackFun);
     }
 
@@ -61,9 +62,10 @@ public class RedisLock {
      * @param function        调用的方法
      * @return
      */
-    public <R> R Handle(String key, Long lockWaitTimeout, Function<Jedis,R> function) {
+    public <R> R Handle(String key, Long lockWaitTimeout, Function<Jedis, R> function) {
         Jedis jedis = getJedis();
-        boolean getLock ;
+        Long time1 = System.currentTimeMillis();
+        boolean getLock;
         try {
             long maxSleepCount = lockWaitTimeout / LOCK_POLL_INTERVAL;
             long sleepCount = 0;
@@ -81,7 +83,9 @@ public class RedisLock {
                 try {
                     return function.apply(jedis);
                 } finally {
-                    jedis.del(Lock.generateLockKey(key));
+                    if (System.currentTimeMillis() - time1 > DEFAULT_LOCK_EXPIRE) {
+                        jedis.del(Lock.generateLockKey(key));
+                    }
                 }
             }
             return null;
@@ -104,7 +108,7 @@ public class RedisLock {
         //不存在锁
         boolean flag = false;
         if (result == 1) {
-            jedis.pexpire(Lock.generateLockKey(key), DEFAULT_LOCK_EXPIRE_MILLISENCONDS);
+            jedis.pexpire(Lock.generateLockKey(key), DEFAULT_LOCK_EXPIRE);
             flag = true;
         }
         return flag;
