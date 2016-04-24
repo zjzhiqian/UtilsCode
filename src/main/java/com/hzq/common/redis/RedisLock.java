@@ -26,7 +26,11 @@ public class RedisLock {
         this.jedisFactory = jedisFactory;
     }
 
-    private Jedis getJedis() {
+    /**
+     * 设为pubic 如果有需要不用封装的话
+     * @return
+     */
+    public Jedis getJedis() {
         return jedisFactory.getObject();
     }
 
