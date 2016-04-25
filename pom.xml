@@ -47,6 +47,7 @@
         <junit-version>4.11</junit-version>
         <minjdk-version>1.8</minjdk-version>
         <httpclient-version>4.4.1</httpclient-version>
+        <servlet-version>3.1.0</servlet-version>
     </properties>
 
 
@@ -216,6 +217,14 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient-version}</version>
+        </dependency>
+
+
+        <!--servlet-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${servlet-version}</version>
         </dependency>
 
 
