@@ -9,9 +9,6 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import redis.clients.jedis.Jedis;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * Created by hzq on 15/6/21.
  */
@@ -29,6 +26,6 @@ public class RedisPrototypeTest extends AbstractJUnit4SpringContextTests {
     public void checkPrototype() {
         Jedis obj1 = lockRedis.getJedis();
         Jedis obj2 = lockRedis.getJedis();
-        Assert.assertTrue(obj1!=obj2);
+        Assert.assertTrue(obj1 != obj2);
     }
 }

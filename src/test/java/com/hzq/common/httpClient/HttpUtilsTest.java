@@ -1,14 +1,14 @@
-package com.hzq.common.redis;
+package com.hzq.common.httpClient;
 
+import com.hzq.common.httpClient.HttpUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by hzq on 15/6/21.
@@ -17,17 +17,17 @@ import java.util.concurrent.Executors;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-spring.xml"})
-public class MTest extends AbstractJUnit4SpringContextTests {
+public class HttpUtilsTest extends AbstractJUnit4SpringContextTests {
 
     @Autowired
-    private RedisLock lockRedis;
+    private HttpUtils httpUtils;
 
 
     @Test
     public void check() {
-
-        lockRedis.getJedis().set("123","32");
-
+        String result = httpUtils.sendHttp("http://www.baidu.com");
+        Assert.assertTrue(StringUtils.isNoneEmpty(result));
     }
+
 
 }

@@ -38,12 +38,15 @@
         <spring-version>4.2.5.RELEASE</spring-version>
         <jackson-version>2.7.3</jackson-version>
         <commons-log-version>1.2</commons-log-version>
+        <commons-io-version>2.4</commons-io-version>
+        <commons-lang3-version>3.4</commons-lang3-version>
         <slf4j-version>1.7.12</slf4j-version>
         <fastjson-version>1.2.6</fastjson-version>
         <redis-spring-data-version>1.7.1.RELEASE</redis-spring-data-version>
         <redis-clients-version>2.6.2</redis-clients-version>
         <junit-version>4.11</junit-version>
         <minjdk-version>1.8</minjdk-version>
+        <httpclient-version>4.4.1</httpclient-version>
     </properties>
 
 
@@ -187,11 +190,32 @@
         </dependency>
 
 
-        <!--commons-logging-->
+        <!--commons-->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>${commons-log-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3-version}</version>
+        </dependency>
+
+
+
+        <!--httpClient-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient-version}</version>
         </dependency>
 
 
