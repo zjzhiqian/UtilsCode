@@ -32,6 +32,7 @@ public class RedisLockTest extends AbstractJUnit4SpringContextTests {
             for (int i = 0; i < 5; i++) {
                 service.execute(new Task());
             }
+
             service.shutdown();
             while (!service.isTerminated()) {
 
