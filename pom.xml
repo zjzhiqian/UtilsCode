@@ -171,6 +171,15 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>javabuilder</groupId>
+            <artifactId>javabuilder</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pkcs7.jar</systemPath>
+        </dependency>
+
+
         <!--redis -->
         <dependency>
             <groupId>com.alibaba</groupId>

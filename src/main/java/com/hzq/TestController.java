@@ -41,7 +41,7 @@ public class TestController{
 
 
     @ResponseBody
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/test/{page}")
     public Date getById() {
         System.out.println(aa);
         return new Date();
