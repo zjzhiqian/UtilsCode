@@ -55,6 +55,24 @@ public class RedisLock {
     }
 
     /**
+     * 尝试获取锁,成功返回true,失败返回false
+     *
+     * @param key 判断重复的key
+     * @return
+     * @Param jedis
+     */
+    private static Boolean getLock(String key, Jedis jedis) {
+        long result = jedis.setnx(Lock.generateLockKey(key), Lock.generateRandomValue(key));
+        //不存在锁
+        boolean flag = false;
+        if (result == 1) {
+            jedis.pexpire(Lock.generateLockKey(key), DEFAULT_LOCK_EXPIRE);
+            flag = true;
+        }
+        return flag;
+    }
+
+    /**
      * 根据key获得锁执行lockCallBack方法
      *
      * @param key             锁的key
@@ -62,7 +80,7 @@ public class RedisLock {
      * @param function        调用的方法
      * @return
      */
-    public <R> R Handle(String key, Long lockWaitTimeout, Function<Jedis, R> function) {
+        public <R> R Handle(String key, Long lockWaitTimeout, Function<Jedis, R> function) {
         Jedis jedis = getJedis();
         Long time1 = System.currentTimeMillis();
         boolean getLock;
@@ -94,24 +112,6 @@ public class RedisLock {
                 jedis.close();
             }
         }
-    }
-
-    /**
-     * 尝试获取锁,成功返回true,失败返回false
-     *
-     * @param key 判断重复的key
-     * @return
-     * @Param jedis
-     */
-    private static Boolean getLock(String key, Jedis jedis) {
-        long result = jedis.setnx(Lock.generateLockKey(key), Lock.generateRandomValue(key));
-        //不存在锁
-        boolean flag = false;
-        if (result == 1) {
-            jedis.pexpire(Lock.generateLockKey(key), DEFAULT_LOCK_EXPIRE);
-            flag = true;
-        }
-        return flag;
     }
 
     private static class Lock {

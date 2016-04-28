@@ -10,17 +10,6 @@
 
 
     <repositories>
-        <!--<repository>-->
-        <!--<id>central</id>-->
-        <!--<name>Maven Repository Switchboard</name>-->
-        <!--<layout>default</layout>-->
-        <!--<url>http://mvnrepository.com/</url>-->
-        <!--<snapshots>-->
-        <!--<enabled>false</enabled>-->
-        <!--</snapshots>-->
-        <!--</repository>-->
-
-
         <repository>
             <id>central</id>
             <name>Central Repository</name>
@@ -30,7 +19,6 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-
     </repositories>
 
 
@@ -48,6 +36,7 @@
         <minjdk-version>1.8</minjdk-version>
         <httpclient-version>4.4.1</httpclient-version>
         <servlet-version>3.1.0</servlet-version>
+        <logback-version>1.1.2</logback-version>
     </properties>
 
 
@@ -157,27 +146,15 @@
         </dependency>
 
 
-        <!--slf4j-->
+        <!--log-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j-version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <version>${slf4j-version}</version>
-        </dependency>
 
 
-        <dependency>
-            <groupId>javabuilder</groupId>
-            <artifactId>javabuilder</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pkcs7.jar</systemPath>
-        </dependency>
 
 
         <!--redis -->
@@ -220,7 +197,6 @@
         </dependency>
 
 
-
         <!--httpClient-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -236,6 +212,15 @@
             <version>${servlet-version}</version>
         </dependency>
 
+
+        <!--buider-->
+        <dependency>
+            <groupId>javabuilder</groupId>
+            <artifactId>javabuilder</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pkcs7.jar</systemPath>
+        </dependency>
 
         <!--test-->
         <dependency>

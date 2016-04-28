@@ -53,7 +53,7 @@ public class RedisLockTest extends AbstractJUnit4SpringContextTests {
     private class Task implements Runnable {
         @Override
         public void run() {
-            String obj = lockRedis.Handle("key", 300L, arg -> {
+            String obj = lockRedis.Handle("key", 300L, args -> {
                 System.out.println();
                 return "123";
             });

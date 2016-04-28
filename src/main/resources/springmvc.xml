@@ -16,6 +16,7 @@
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
     </context:component-scan>
 
+
     <!--通用视图解析器 -->
     <bean id="viewResolverCommon"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
