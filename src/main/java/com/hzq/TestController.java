@@ -3,6 +3,7 @@ package com.hzq;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
 
 import java.util.Date;
 import java.util.Map;
@@ -12,30 +13,28 @@ import java.util.Map;
  */
 
 @Controller
-public class TestController{
-
-    private  String aa="aa";
+public class TestController {
 
 
 
     @InitBinder
-    public void tt2(WebDataBinder binder){
+    public void tt2(String name) {
+        System.out.println(name);
         System.out.println("Controller initBinder2");
-        aa="vvvv";
     }
 
 
-    @ModelAttribute("key")  //TODO 这个 value的用法
-    public String tt3(String id,Integer oo){
+    @ModelAttribute("key")
+    public String tt3(String id, String name) {
+        System.out.println(name);
         System.out.println("Controller modelAttibuteMethod");
         return "123333";
     }
 
 
     @ResponseBody
-    @RequestMapping(value = "/test/{page}")
+    @RequestMapping(value = "/test/")
     public Date getById(Map map) {
-        System.out.println(aa);
         return new Date();
     }
 }

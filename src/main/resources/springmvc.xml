@@ -31,6 +31,12 @@
 
     <!-- 必配,注册Mapping,Adapter,ExceptionResolver,JSR303,数据转换等 -->
     <mvc:annotation-driven>
+
+        <!--<mvc:argument-resolvers>-->
+            <!--<bean id="myresolver" class="com.hzq.MyResolver"></bean>-->
+        <!--</mvc:argument-resolvers>-->
+
+
         <mvc:message-converters>
             <!-- 处理responseBody 里面日期类型 -->
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">

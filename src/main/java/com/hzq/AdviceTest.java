@@ -22,9 +22,9 @@ public class AdviceTest {
 //        System.out.println("AdviceTest modelAttrybute2");
 //    }
 
-    @InitBinder
-    public void InitBinderMethod2() {
-        System.out.println("AdviceTest InitBinder2");
-    }
+//    @InitBinder
+//    public void InitBinderMethod2() {
+//        System.out.println("AdviceTest InitBinder2");
+//    }
 
 }
