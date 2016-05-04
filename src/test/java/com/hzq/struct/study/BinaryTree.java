@@ -118,11 +118,11 @@ public class BinaryTree<T extends Comparable> {
         } else if (compRs < 0) {
             node.right = remove(node.right, element);
         } else if (node.left != null && node.right != null) {
-            //有2个子节点,找出右边最小的节点替代,然后在右节点中删除这个节点
-            node.element = findMin(node).element;
-            node.right = remove(node.right, element);
+            //有2个子节点,先用右树最小值替代节点值,然后删除右树的这个最小值节点
+            node.element = findMin(node.right).element;
+            node.right = remove(node.right, node.element);
         } else {
-            //只有一个子节点,直接删除
+            //只有一个子节点,将node用node下的节点替代
             node = node.left == null ? node.right : node.left;
         }
         return node;
@@ -147,7 +147,6 @@ public class BinaryTree<T extends Comparable> {
             System.out.println(buffer.toString() + node.element);
             print(node.left, height);
         }
-
     }
 
 
@@ -191,6 +190,10 @@ public class BinaryTree<T extends Comparable> {
 //        System.out.println(tree.findMin().element);
 
 
+        tree.print();
+
+        tree.remove(2);
+        System.out.println("===================================");
         tree.print();
 
     }
