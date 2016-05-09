@@ -80,7 +80,7 @@ public class RedisLock {
      * @param function        调用的方法
      * @return
      */
-        public <R> R Handle(String key, Long lockWaitTimeout, Function<Jedis, R> function) {
+    public <R> R Handle(String key, Long lockWaitTimeout, Function<Jedis, R> function) {
         Jedis jedis = getJedis();
         Long time1 = System.currentTimeMillis();
         boolean getLock;
@@ -101,7 +101,7 @@ public class RedisLock {
                 try {
                     return function.apply(jedis);
                 } finally {
-                    if (System.currentTimeMillis() - time1 > DEFAULT_LOCK_EXPIRE) {
+                    if (System.currentTimeMillis() - time1 < DEFAULT_LOCK_EXPIRE) { //锁没有超时,手动删除    超时了可能会被其他获得
                         jedis.del(Lock.generateLockKey(key));
                     }
                 }
@@ -129,3 +129,55 @@ public class RedisLock {
     }
 
 }
+
+
+//try {
+//        //判断商品是否存在
+//        if (itemMapper.selectByPrimaryKey(id) == null) {
+//        throw new CartsException("添加失败,商品不存在");
+//        }
+//        if (!RedisHelper.compareAndSetRequest("CartsService", "addCart", userId.toString(), 10)) {
+//        Map map = new HashMap<>();
+//        map.put("userId", userId);
+//        map.put("id", id);
+//        List<CartResult> rs = cartMapper.QueryCarts(map);
+//        if (rs.size() > 1) {
+//        throw new CartsException("购物车数据出错");
+//        }
+//        if (rs.size() == 1) {
+//        //购物车内有此商品
+//        CartResult data = rs.get(0);
+//        Integer num = data.getQuantity();
+//        if (num + quantity > 0) { //判断更新后购物车数量是否为负数
+//        if (quantity > 0) { //判断商品库存是否足够
+//        checkStock(id, num, quantity);
+//        }
+//        flag = cartMapper.updateCartCount(userId, id, quantity);
+//        } else {
+//        throw new CartsException("购物车商品数量不得少于1");
+//        }
+//        } else {
+//        if (quantity < 1) {
+//        throw new CartsException("加入购物车失败,数量必须为正数");
+//        }
+//        checkStock(id, 0, quantity);
+//        Cart cart = new Cart();
+//        cart.setItemId(id);
+//        cart.setMemberId(userId);
+//        cart.setQuantity(quantity);
+//
+//        Integer storeId = itemMapper.selectStoreIdByItemId(id);
+//        if (storeId == null) {
+//        throw new CartsException("加入购物车失败,店铺不存在");
+//        }
+//        cart.setStoreId(storeId);
+//        cartMapper.insert(cart);
+//        flag = true;
+//        }
+//        } else {
+//        throw new CartsException("点的太快了,稍等下吧");
+//        }
+//        } finally {
+//        RedisHelper2.del(0, "CartsServiceaddCart" + userId);
+//        }
+//        return flag;
