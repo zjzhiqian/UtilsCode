@@ -1,4 +1,4 @@
-package com.hzq.common.lock;
+package com.hzq.lock;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;

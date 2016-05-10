@@ -1,4 +1,4 @@
-package com.hzq.common.lock;
+package com.hzq.lock;
 
 
 import java.util.Random;
