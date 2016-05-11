@@ -1,6 +1,8 @@
 package com.hzq.enums;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Random;
 
 /**
@@ -43,7 +45,7 @@ enum Color implements Runnable { //所有的enum类型都继承自Enum类,java�
      */
     @Override
     public String toString() {
-        return this.value.toString();
+        return this.ordinal() + "";
     }
 
     /**
@@ -70,6 +72,8 @@ public class EnumClass {
         Color color = Enum.valueOf(Color.class, "RED");
         System.out.println(color.getValue());//添加构造方法
         System.out.println(color.toString());//覆盖父类方法
+
+//        Color.class.enumConstantDirectory().get("1"); package access
 
         //enum的遍历
         switch (Color.getEnum(1)) {

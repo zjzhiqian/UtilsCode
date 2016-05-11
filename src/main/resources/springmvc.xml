@@ -31,7 +31,6 @@
 
     <!-- 必配,注册Mapping,Adapter,ExceptionResolver,JSR303,数据转换等 -->
     <mvc:annotation-driven>
-
         <!--<mvc:argument-resolvers>-->
             <!--<bean id="myresolver" class="com.hzq.MyResolver"></bean>-->
         <!--</mvc:argument-resolvers>-->
