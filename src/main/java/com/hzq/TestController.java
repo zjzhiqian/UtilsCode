@@ -24,18 +24,16 @@ public class TestController {
 
 
 //    @InitBinder({"kkk"})@
-    @InitBinder
-    public void tt2(WebDataBinder binder) {
+//    @InitBinder
+//    public void tt2(WebDataBinder binder) {
 //        binder.registerCustomEditor(User.class,new PropertiesEditor());
 //        GenericConversionService conversionService= (GenericConversionService)binder.getConversionService();
 //        conversionService.addConverter(new CustomConvertor());
-        binder.setDisallowedFields(new String[]{"1","2"});
+//        binder.setDisallowedFields(new String[]{"1","2"});
 
 
-        System.out.println("Controller initBinder2");
-    }
-
-
+//        System.out.println("Controller initBinder2");
+//    }
 //    @ModelAttribute("key")
 //    public String tt3() {
 //        System.out.println("Controller modelAttibuteMethod");
@@ -44,8 +42,8 @@ public class TestController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/test/{multiValueMap}")
-    public Date getById(@ModelAttribute HashMap multiValueMap) {
+    @RequestMapping(value = "/test")
+    public Date getById(@RequestParam MultiValueMap map) {
 
         return new Date();
     }
