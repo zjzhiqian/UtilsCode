@@ -2,7 +2,6 @@ package com.hzq.common.validator.commonValidator;
 
 import com.hzq.common.exception.BusyOperationException;
 import com.hzq.common.redis.RedisHelper;
-import com.hzq.common.validator.Validator;
 
 /**
  * Created by hzq on 16/5/13.
