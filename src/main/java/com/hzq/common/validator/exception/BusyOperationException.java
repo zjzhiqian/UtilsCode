@@ -1,4 +1,4 @@
-package com.hzq.common.exception;
+package com.hzq.common.validator.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

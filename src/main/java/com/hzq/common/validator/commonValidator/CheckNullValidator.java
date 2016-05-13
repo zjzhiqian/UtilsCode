@@ -1,15 +1,11 @@
 package com.hzq.common.validator.commonValidator;
 
-import com.hzq.common.Ttttt;
-import com.hzq.common.User;
 import com.hzq.common.validator.Annotation.CheckNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +24,7 @@ public class CheckNullValidator implements Validator {
      */
     private String message;
     /**
-     * true表示使用注解校验
+     * true表示使用注解校验类
      */
     private boolean multyCheck;
 
@@ -46,9 +42,6 @@ public class CheckNullValidator implements Validator {
     private void simpleCheck() {
         if (object == null) {
             throwException(message);
-        }
-        if (!(object instanceof String || object instanceof List || object instanceof Map)) {
-            throw new UnSupportNullCheckException("不支持的Null校验类型");
         }
         if (object instanceof String && StringUtils.isEmpty((String) object)) {
             throwException(message);
@@ -87,6 +80,9 @@ public class CheckNullValidator implements Validator {
      * @param target
      */
     private void handleObject(Object target) {
+        if (target == null) {
+            throwException(message);
+        }
         for (Field field : target.getClass().getDeclaredFields()) {
             CheckNull anno = field.getAnnotation(CheckNull.class);
             //过滤出带注解的字段
@@ -103,36 +99,18 @@ public class CheckNullValidator implements Validator {
                 }
                 if (val instanceof List) {//List字段,调用handleList方法
                     handleList((List) val, anno.value());
-                } else if (target instanceof String && StringUtils.isEmpty((String) target)) { //Sting类型
+                } else if (val instanceof String && StringUtils.isEmpty((String) val)) { //Sting类型
                     throwException();
                 } else if (object instanceof Map && ((Map) object).size() == 0) { //map判断size
                     throwException();
-                } else {
+                }
+
+                if(!(val instanceof List || val instanceof String || val instanceof Map)){
                     throw new UnSupportNullCheckException("不支持的Null校验类型");
                 }
             }
         }
     }
-
-
-    public static void main(String args[]) {
-        List<User> user = new ArrayList<>();
-        User u = new User();
-        u.setName("123");
-        u.setAge(3);
-        u.setMap(new HashMap<>());
-        List list = new ArrayList();
-        u.setLists(list);
-        Ttttt tt = new Ttttt();
-        tt.setName("mc");
-        Map map = new HashMap<>();
-//        map.put("1","2");
-        tt.setMap(map);
-        list.add(tt);
-        user.add(u);
-        new CheckNullValidator(user, "校验失败", true).valid();
-    }
-
 
     /**
      * 简单的抛异常方法

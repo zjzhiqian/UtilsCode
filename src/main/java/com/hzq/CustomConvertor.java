@@ -1,6 +1,5 @@
 package com.hzq;
 
-import com.hzq.common.User;
 import org.springframework.core.convert.TypeDescriptor;
 import org.springframework.core.convert.converter.GenericConverter;
 import org.springframework.web.bind.annotation.RequestParam;
