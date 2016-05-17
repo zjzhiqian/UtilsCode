@@ -39,8 +39,6 @@ class Blocked2 implements Runnable {
 }
 
 public class InterruptTest {
-
-
     public static void main(String... args) throws Exception {
         Thread t = new Thread(new Blocked2());
         t.start();

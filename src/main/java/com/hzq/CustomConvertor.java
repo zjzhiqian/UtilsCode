@@ -15,7 +15,8 @@ import java.util.Set;
 public class CustomConvertor implements GenericConverter {
     @Override
     public Set<ConvertiblePair> getConvertibleTypes() {
-        return Collections.singleton(new ConvertiblePair(String.class, User.class));
+//        return Collections.singleton(new ConvertiblePair(String.class, User.class));
+        return null;
     }
 
     @Override
@@ -27,8 +28,9 @@ public class CustomConvertor implements GenericConverter {
         RequestParam requestParam = targetType.getAnnotation(RequestParam.class);
         Map map = new HashMap<>();
 
-        User user = new User();
-        user.setName(string);
-        return user;
+        return null;
+//        User user = new User();
+//        user.setName(string);
+//        return user;
     }
 }

@@ -20,7 +20,7 @@ public class ABA {
         targetOffSet = UnsafeUtil.getFieldOffSet(ABA.class, "target");
     }
 
-    private static AtomicStampedReference<Integer> atomRef = new AtomicStampedReference<>(10, 0);
+
 
     /**
      * ABA存在的问题
@@ -47,30 +47,45 @@ public class ABA {
     /**
      * ABA的解决方案之一
      */
-    private void showResolve() {
-        new Thread(() -> {
-            atomRef.compareAndSet(10, 11, atomRef.getStamp(), atomRef.getStamp() + 1);
-            System.out.println("targetChanged ->" + atomRef.getReference());
-            atomRef.compareAndSet(11, 10, atomRef.getStamp(), atomRef.getStamp() + 1);
-            System.out.println("targetChanged ->" + atomRef.getReference());
-        }).start();
+    private static AtomicStampedReference<Integer> atomRef = new AtomicStampedReference<>(10, 0);
+    //此时current.reference = 10; current.stamp = 0;
 
+
+    private void showResolve() {
+        //执行顺序
+        //      1.线程1进入sleep
+        //      2.线程2获取了stamp并且赋值给本地变量(0),线程1执行CAS,讲stamp+1+1 更新为2
+        //      3.线程苏醒,进行CAS操作,10--13 满足条件 0-->1不满足条件,此时就返回了false
+        //线程1
         new Thread(() -> {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            atomRef.compareAndSet(10, 11, atomRef.getStamp(), atomRef.getStamp() + 1);
+            System.out.println("targetChanged ->" + atomRef.getReference());
+            atomRef.compareAndSet(11, 10, atomRef.getStamp(), atomRef.getStamp() + 1);
+            System.out.println("targetChanged ->" + atomRef.getReference());
+        }).start();
+
+        //线程2
+        new Thread(() -> {
             int stamp = atomRef.getStamp();
-            boolean result = atomRef.compareAndSet(100, 101, stamp, stamp + 1);
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            boolean result = atomRef.compareAndSet(10,13,2,3);
             System.out.println(result); // false
         }).start();
     }
 
     public static void main(String[] args) throws InterruptedException {
         ABA aba = new ABA();
-        aba.showProblem();
-        TimeUnit.SECONDS.sleep(3);
+//        aba.showProblem();
+//        TimeUnit.SECONDS.sleep(3);
         System.out.println("===============");
         aba.showResolve();
     }
