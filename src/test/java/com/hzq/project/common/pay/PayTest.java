@@ -108,10 +108,8 @@ public class PayTest {
         String orderTime = new SimpleDateFormat("yyyymmddHHMMSS").format(new Date());
         String curCode = "001";
         String orderAmount = "0.10";
-        //TODO 商户id
         String merChantNo = "1";
 
-        //TODO 商户接收通知URL
         String orderUrl = "";
 
         String signData = orderNo + "|" + orderTime + "|" + curCode + "|" + orderAmount + "|" + merChantNo;
