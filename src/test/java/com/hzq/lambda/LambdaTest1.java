@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.BiFunction;
@@ -26,6 +27,7 @@ public class LambdaTest1 {
         //不需要为lambda表达式返回类型,可以从上下文推断出来(在某些分支中没有返回值是不合法的 比如if)
         List<Integer> list = Arrays.asList(2, 3, 1);
 //        list.sort((com1, com2) -> Integer.compare(com1, com2));
+        list.sort(Comparator.comparing(Integer::intValue));
         System.out.println(list);
     }
 
@@ -97,8 +99,8 @@ public class LambdaTest1 {
 
     @Test
     /**
-     * 1.6变量作用于
-     * 在lambda中使用this,并不是调用Runnbale的this,而是这个类的this
+     * 1.6变量作用域
+     * 在lambda中使用this,并不是调用Runnable的this,而是这个类的this
      * lambda表达式会有闭包
      */
     public void test06() {
