@@ -25,7 +25,6 @@ public class MybtaisTest {
     @Autowired
     SqlSessionTemplate sqlSessionTemplate;
 
-
     @Test
     public void test1() {
         System.out.println(1);
@@ -35,6 +34,7 @@ public class MybtaisTest {
 
 
         Optional<Map> rs = Optional.ofNullable(sqlSessionTemplate.selectOne("org.mybatis.example.BlogMapper.selectOne"));
+        Map map1 = rs.orElseThrow(() -> new RuntimeException("11"));
 //        return rs.orElseThrow(() -> new RuntimeException("结果不存在"));
     }
 }

@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -29,15 +30,13 @@ public class LambdaTest3 {
 
     @Test
     /**
-     * stream  TODO stream和parallelStream的区别
+     * stream
      */
     public void test01() {
         Long count = strList.stream().filter(arg -> arg.length() > 3).count();
         Long count2 = strList.parallelStream().filter(arg -> arg.length() > 2).count();
         System.out.println(count);
         System.out.println(count2);
-
-
         //在执行stream,filter时,并没有执行,stream操作符是延迟执行的
         Stream<String> stringStream = strList.stream().filter(arg -> {
             System.out.println(3);
@@ -45,7 +44,6 @@ public class LambdaTest3 {
         });
         System.out.println("====");
         stringStream.count();
-
     }
 
     @Test
@@ -60,9 +58,8 @@ public class LambdaTest3 {
 //        Stream integerStream = Stream.generate(() -> 2);
 //        Stream randomStream = Stream.generate(Math::random);
 //        Stream<BigInteger> bigIntegerStream = Stream.iterate(BigInteger.ZERO, n -> n.add(BigInteger.ONE));
-
+        Stream.of("dewd", "ddd").map(String::toUpperCase).peek(System.out::println).collect(toList());
     }
-
 
     @Test
     /**
@@ -91,9 +88,11 @@ public class LambdaTest3 {
         final Stream<Double> limit = Stream.generate(Math::random).limit(3);
 //        infoStream(limit);
         //裁剪流
-        Stream.of(1, 2, 3).skip(1);
+        Stream.of(1, 2, 3, 4, 5).skip(1).forEach(System.out::print);
+        System.out.println("");
+        System.out.println("===");
         //连接流
-        Stream.concat(Stream.of(2), Stream.of(2));
+        Stream.concat(Stream.of(2), Stream.of(2)).forEach(System.out::print);
     }
 
     @Test
@@ -214,6 +213,10 @@ public class LambdaTest3 {
 
         final HashSet<Object> hashSet = Stream.of("1", "2", "3").collect(HashSet::new, HashSet::add, HashSet::addAll);
         final Set<String> hashSet2 = Stream.of("1", "2", "3").collect(Collectors.toSet());
+
+
+        Stream.of("1", "2", "3").collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
         System.out.println(hashSet);
         System.out.println(hashSet2);
 
@@ -242,6 +245,8 @@ public class LambdaTest3 {
         User b = new User("name2", 2);
         User c = new User("name1", 3);
         final List<User> users = Arrays.asList(a, b, c);
+        b.setName(null);
+
 
         final List<User> collect = users.stream().filter(arg -> arg.getAge() > 1).collect(Collectors.toList());
         System.out.println(collect);
@@ -339,6 +344,7 @@ public class LambdaTest3 {
      *
      * @param stream
      */
+
     private static void infoStream(IntStream stream) {
 //        stream.peek(System.out::print);
         stream.peek(System.out::println).count();
