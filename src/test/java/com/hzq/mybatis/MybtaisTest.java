@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,10 +25,16 @@ public class MybtaisTest {
     @Autowired
     SqlSessionTemplate sqlSessionTemplate;
 
-    public Object test1() {
+
+    @Test
+    public void test1() {
         System.out.println(1);
         Map map = new HashMap<>();
+        map.put("price",new BigDecimal(2.335));
+        sqlSessionTemplate.insert("org.mybatis.example.BlogMapper.insertOne",map);
+
+
         Optional<Map> rs = Optional.ofNullable(sqlSessionTemplate.selectOne("org.mybatis.example.BlogMapper.selectOne"));
-        return rs.orElseThrow(() -> new RuntimeException("结果不存在"));
+//        return rs.orElseThrow(() -> new RuntimeException("结果不存在"));
     }
 }

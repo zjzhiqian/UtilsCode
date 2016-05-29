@@ -7,4 +7,11 @@
     <select id="selectOne" resultType="java.util.Optional">
         select * from core_items where id=9999
     </select>
+
+
+    <insert id="insertOne" parameterType="java.util.Map">
+        insert into items (core_item_id,price) VALUES ( "123",#{price})
+    </insert>
+
+
 </mapper>
