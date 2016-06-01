@@ -1,7 +1,5 @@
 package com.hzq.struct.study;
 
-import javax.xml.soap.Node;
-
 /**
  * 平衡树的实现
  * Created by hzq on 16/5/5.

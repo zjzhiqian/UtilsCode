@@ -1,6 +1,5 @@
 package com.hzq.lock;
 
-import org.junit.Test;
 
 import java.util.stream.Stream;
 
@@ -10,17 +9,17 @@ import java.util.stream.Stream;
 
 public class FalseSharing implements Runnable {
 
-    public final static int NUM_THREADS = 4; // change
-    public final static long ITERATIONS = 500L * 1000L * 1000L;
+    private final static int NCPU = Runtime.getRuntime().availableProcessors();
+    private final static long TIMES = 500 * 1000 * 1000L;
     private final int arrayIndex;
     private static VolatileLong[] longs1;
     private static VolatileLong2[] longs2;
     private static VolatileLong3[] longs3;
 
     private static void init() {
-        longs1 = new VolatileLong[NUM_THREADS];
-        longs2 = new VolatileLong2[NUM_THREADS];
-        longs3 = new VolatileLong3[NUM_THREADS];
+        longs1 = new VolatileLong[NCPU];
+        longs2 = new VolatileLong2[NCPU];
+        longs3 = new VolatileLong3[NCPU];
         for (int i = 0; i < longs1.length; i++) {
             longs1[i] = new VolatileLong();
         }
@@ -39,7 +38,7 @@ public class FalseSharing implements Runnable {
     public static void main(String... agrs) throws Exception {
         init();
         long start = System.nanoTime();
-        Thread[] threads = new Thread[NUM_THREADS];
+        Thread[] threads = new Thread[NCPU];
         for (int i = 0; i < threads.length; i++) {
             threads[i] = new Thread(new FalseSharing(i));
         }
@@ -51,26 +50,26 @@ public class FalseSharing implements Runnable {
     }
 
     public void run() {
-        long i = ITERATIONS + 1;
+        long i = TIMES + 1;
         while (0 != --i) {
-            longs1[arrayIndex].value = i;
+            longs3[arrayIndex].value = i;
         }
     }
 
-    public final static class VolatileLong {
-        public volatile long value = 0L;
+    private final static class VolatileLong {
+        volatile long value = 0L;
     }
 
     // long padding避免false sharing
-    public final static class VolatileLong2 {
+    private final static class VolatileLong2 {
         volatile long p0, p1, p2, p3, p4, p5, p6;
-        public volatile long value = 0L;
+        volatile long value = 0L;
         volatile long q0, q1, q2, q3, q4, q5, q6;
     }
 
     //-XX:-RestrictContended
     @sun.misc.Contended
-    public final static class VolatileLong3 {
-        public volatile long value = 0L;
+    private final static class VolatileLong3 {
+        volatile long value = 0L;
     }
 }
