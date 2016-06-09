@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://org.opencloudb/">
+
+
+    <!--逻辑库 TESTDB-->
+    <!--schema标签属性:
+        dataNode: 节点,任意String dn1,dn2,dn3
+        checkSQLschema:
+             为 true 时,如果我们执行询句 select * from TESTDB.travelrecord
+                        则 MyCat 会把询句修改 select * from travelrecord
+                        即把表示 schema 癿字符去捧,避免到后端数据库执行时报(ERROR 1146 (42S02):Table ‘testdb.travelrecord’ doesn’t exist)
+                        如果询句语句表示的不是schema指定名字 如:select * from db1.travelrecord;
+                        MyCat并不会删除db1这个字段
+                        如果没有定义该库的话则会报错,所以在提供SQL时不要带字段。
+        sqlMaxLimit: 执行sql时 MyCat自动加上limit语句
+                     sql如果显示指定limit大小,则不受该属性的约束
+                     schema如果为非拆分库,该属性不会生效,需要手动添加limit
+    -->
+    <schema name="TESTDB" checkSQLschema="true" sqlMaxLimit="100" dataNode="dn1">
+        <!--配置分片表-->
+        <!--
+            name:     代表表名
+            dataNode: 代表表对应的分片
+            Mycat默认采用分库方式，也就是一个表映射到不同的库上
+            rule代表表要采用的数据切分方式，名称对应到rule.xml中的对应配置，如果要分片必须配置。
+            primaryKey: 指定String的主键   如果非主键分片的,就会分发查询到所有Node上,主键分片 会缓存主键与具体Node的信息,直接发送到该Node
+            type:
+            autoIncrement: *******   全局序列
+            needAddLimit: ******* 默认为true Mycat自动加上limit100
+         -->
+
+
+
+        <table name="t_user" dataNode="dn1,dn2,dn3" rule="sharding-by-mod3"/>
+        <!--<table name="ht_jy_login_log" primaryKey="ID" dataNode="dn1,dn2" rule="sharding-by-date_jylog"/>-->
+    </schema>
+
+    <!--配置分片-->
+    <!--
+        表切分后需要配置映射到哪几个数据库中
+        Mycat的分片实际上就是库的别名,例如上面例子配置了两个分片dn1,dn2 分别对应到物理机映射dataHost localhost1 的两个库上。
+    -->
+    <dataNode name="dn1" dataHost="local3306" database="db3306"/>
+    <dataNode name="dn2" dataHost="local3307" database="db3307"/>
+    <dataNode name="dn3" dataHost="local3308" database="db3308"/>
+
+    <!--物理主机-->
+    <dataHost name="local3306" writeType="0" switchType="1" slaveThreshold="100" balance="1" dbType="mysql" maxCon="10"
+              minCon="1" dbDriver="native">
+        <heartbeat>show status like 'wsrep%'</heartbeat>
+        <!--
+            writeHost 此标签代表 一个逻辑主机（dataHost对应的后端的物理主机映射 例如例子中写库hostM1 映射到127.0.0.1:3306
+            如果后端需要做读写分离或者多写 或者主从则通过配置 多个writeHost或者readHost即可。
+        -->
+        <writeHost host="hostM1" url="127.0.0.1:3306" user="root" password="root">
+        </writeHost>
+        <!--dataHost 标签中的 writeType balance 等标签则是不同的策略，具体参考指南-->
+
+
+
+
+
+        <!-- can have multi write hosts -->
+        <writeHost host="hostM1" url="localhost:3306" user="root"
+                   password="123456">
+            <!-- can have multi read hosts -->
+            <!-- <readHost host="hostS1" url="localhost:3306" user="root" password="123456"
+            /> -->
+        </writeHost>
+        <!-- <writeHost host="hostM2" url="localhost:3316" user="root" password="123456"/> -->
+
+
+    </dataHost>
+
+
+
+
+
+
+    <dataHost name="local3307" writeType="0" switchType="1" slaveThreshold="100" balance="1" dbType="mysql" maxCon="10"
+              minCon="1" dbDriver="native">
+        <heartbeat>show status like 'wsrep%'</heartbeat>
+        <!--
+            writeHost 此标签代表 一个逻辑主机（dataHost对应的后端的物理主机映射 例如例子中写库hostM1 映射到127.0.0.1:3306
+            如果后端需要做读写分离或者多写 或者主从则通过配置 多个writeHost或者readHost即可。
+        -->
+        <writeHost host="hostM2" url="127.0.0.1:3307" user="root" password="root">
+        </writeHost>
+        <!--dataHost 标签中的 writeType balance 等标签则是不同的策略，具体参考指南-->
+    </dataHost>
+
+
+    <dataHost name="local3308" writeType="0" switchType="1" slaveThreshold="100" balance="1" dbType="mysql" maxCon="10"
+              minCon="1" dbDriver="native">
+        <heartbeat>show status like 'wsrep%'</heartbeat>
+        <!--
+            writeHost 此标签代表 一个逻辑主机（dataHost对应的后端的物理主机映射 例如例子中写库hostM1 映射到127.0.0.1:3306
+            如果后端需要做读写分离或者多写 或者主从则通过配置 多个writeHost或者readHost即可。
+        -->
+        <writeHost host="hostM3" url="127.0.0.1:3308" user="root" password="root">
+        </writeHost>
+        <!--dataHost 标签中的 writeType balance 等标签则是不同的策略，具体参考指南-->
+    </dataHost>
+
+</mycat:schema>
