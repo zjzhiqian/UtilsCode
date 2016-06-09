@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,5 +37,12 @@ public class MybtaisTest {
         Optional<Map> rs = Optional.ofNullable(sqlSessionTemplate.selectOne("org.mybatis.example.BlogMapper.selectOne"));
         Map map1 = rs.orElseThrow(() -> new RuntimeException("11"));
 //        return rs.orElseThrow(() -> new RuntimeException("结果不存在"));
+    }
+
+    @Test
+    public void test2(){
+        final List<Map> listMap = sqlSessionTemplate.selectList("org.mybatis.example.BlogMapper.selectData");
+
+        System.out.println(1);
     }
 }

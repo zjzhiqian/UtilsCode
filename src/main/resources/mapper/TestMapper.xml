@@ -13,5 +13,8 @@
         insert into items (core_item_id,price) VALUES ( "123",#{price})
     </insert>
 
+    <select id="selectData" resultType="java.util.Map">
+        select * from travelrecord;
+    </select>
 
 </mapper>
