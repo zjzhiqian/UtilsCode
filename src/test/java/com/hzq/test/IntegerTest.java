@@ -9,11 +9,14 @@ public class IntegerTest {
     public static void main(String... args) {
         Integer a = 333;
         Integer b = 333;
-        System.out.println(a == b);
-        System.out.println(a.equals(b));
-        Integer c = 127;
-        Integer d = 127;
-        System.out.println(c == d);
-        System.out.println(a.intValue() == b);
+
+
+        Integer c = new Integer(3);
+//        System.out.println(a == b);
+//        System.out.println(a.equals(b));
+//        Integer c = 127;
+//        Integer d = 127;
+//        System.out.println(c == d);
+//        System.out.println(a.intValue() == b);
     }
 }
