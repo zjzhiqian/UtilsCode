@@ -37,6 +37,7 @@ public class FalseSharing implements Runnable {
 
     public static void main(String... agrs) throws Exception {
         init();
+
         long start = System.nanoTime();
         Thread[] threads = new Thread[NCPU];
         for (int i = 0; i < threads.length; i++) {

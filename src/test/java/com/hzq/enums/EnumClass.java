@@ -38,7 +38,7 @@ enum Color implements Runnable { //所有的enum类型都继承自Enum类,java�
     }
 
     /**
-     * enume覆盖父类方法
+     * enum覆盖父类方法
      *
      * @return
      */

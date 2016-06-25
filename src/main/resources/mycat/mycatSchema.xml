@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://org.opencloudb/">
+
+        <!--schema逻辑库-->
+    <schema name="TESTDB" checkSQLschema="true" sqlMaxLimit="100">
+        <table name="t_user" dataNode="dn1,dn2,dn3" rule="auto-sharding-long"/>
+    </schema>
+
+    <dataNode name="dn1" dataHost="local3306" database="db3306"/>
+    <dataNode name="dn2" dataHost="local3307" database="db3307"/>
+    <dataNode name="dn3" dataHost="local3308" database="db3308"/>
+
+
+    <dataHost name="local3306" writeType="0" switchType="1" slaveThreshold="100" balance="1" dbType="mysql" maxCon="10"
+              minCon="1" dbDriver="native">
+        <heartbeat>show status like 'wsrep%'</heartbeat>
+        <writeHost host="hostM1" url="127.0.0.1:3306" user="root" password="root"> </writeHost>
+    </dataHost>
+
+
+    <dataHost name="local3307" writeType="0" switchType="1" slaveThreshold="100" balance="1" dbType="mysql" maxCon="10"
+              minCon="1" dbDriver="native">
+        <heartbeat>show status like 'wsrep%'</heartbeat>
+        <writeHost host="hostM2" url="127.0.0.1:3307" user="root" password="root"></writeHost>
+    </dataHost>
+
+
+    <dataHost name="local3308" writeType="0" switchType="1" slaveThreshold="100" balance="1" dbType="mysql" maxCon="10"
+              minCon="1" dbDriver="native">
+        <heartbeat>show status like 'wsrep%'</heartbeat>
+        <writeHost host="hostM3" url="127.0.0.1:3308" user="root" password="root"></writeHost>
+    </dataHost>
+
+</mycat:schema>
+
+        ~
