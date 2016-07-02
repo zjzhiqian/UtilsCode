@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -14,6 +16,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.*;
 
 /**
+ * LambdaTest3
  * Created by hzq on 16/5/22.
  */
 public class LambdaTest3 {
@@ -34,6 +37,7 @@ public class LambdaTest3 {
     public void test01() {
         Long count = strList.stream().filter(arg -> arg.length() > 3).count();
         Long count2 = strList.parallelStream().filter(arg -> arg.length() > 2).count();
+
         System.out.println(count);
         System.out.println(count2);
         //在执行stream,filter时,并没有执行,stream操作符是延迟执行的
@@ -247,11 +251,11 @@ public class LambdaTest3 {
         b.setName(null);
 
 
-        final List<User> collect = users.stream().filter(arg -> arg.getAge() > 1).collect(Collectors.toList());
+        final List<User> collect = users.stream().filter(arg -> arg.getAge() > 1).collect(toList());
         System.out.println(collect);
 
         //分组
-        Map<String, List<User>> lists = users.stream().collect(Collectors.toMap(User::getName, Lists::newArrayList, (oldVal, newVal) -> {
+        Map<String, List<User>> lists = users.stream().collect(toMap(User::getName, Lists::newArrayList, (oldVal, newVal) -> {
             final ArrayList<User> users1 = Lists.newArrayList(oldVal);
             users1.addAll(newVal);
             return users1;
@@ -270,6 +274,7 @@ public class LambdaTest3 {
         User c = new User("name1", 3);
         User d = new User("name30", 3);
         final List<User> users = Arrays.asList(a, b, c, d);
+
         //根据年龄分组 groupingByConcurrent会得到一个Concurrent的Map
         final Map<Integer, List<User>> collect = users.stream().collect(groupingBy(User::getAge));
         System.out.println(collect);
