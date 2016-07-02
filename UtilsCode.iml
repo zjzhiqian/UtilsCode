@@ -44,6 +44,37 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: cglib:cglib-nodep:2.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.2.3" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis:mybatis-spring:1.2.1" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator:5.0.0.CR3" level="project" />
+    <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.CR2" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.1.1.GA" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml:classmate:0.8.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.glassfish.web:javax.el:2.2.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: javax.el:javax.el-api:2.2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-validator-annotation-processor:5.0.0.CR3" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:18.0" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:druid:1.0.13" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.8" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.kafka:kafka_2.9.1:0.8.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.kafka:kafka-clients:0.8.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.1.1.7" level="project" />
+    <orderEntry type="library" name="Maven: net.jpountz.lz4:lz4:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.yammer.metrics:metrics-core:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.zookeeper:zookeeper:3.4.6" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
+    <orderEntry type="library" name="Maven: jline:jline:0.9.94" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty:3.7.0.Final" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:3.2" level="project" />
+    <orderEntry type="library" name="Maven: com.101tec:zkclient:0.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.0.1-2" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-runtime:1.0.1-2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.2.5.RELEASE" level="project" />
