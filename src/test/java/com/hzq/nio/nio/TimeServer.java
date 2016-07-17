@@ -1,5 +1,7 @@
 package com.hzq.nio.nio;
 
+import org.junit.Test;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -10,6 +12,11 @@ import java.util.Set;
 
 /**
  * NIO TimeServer
+ * <p>
+ * NIO编程优点:
+ * 1.客户端发起的连接操作都是异步的,可以通过在多路复用器上注册OP_CONNECT等待后续结果,不需要像之前那样的被阻塞
+ * 2.SocketChannel读写操作都是异步的,没有读写数据也不会同步等待,直接返回,这样I/O通信线程可以处理其他链路,无需等待
+ * 3.线程模型的优化,在Linux上通过epoll实现,没有连接句柄数限制(fs)意味着可以有成千上万个客户端连接,而且性能不会随着连接数的增加而下降
  * Created by hzq on 16/7/17.
  */
 public class TimeServer {
@@ -17,7 +24,6 @@ public class TimeServer {
     public static void main(String[] args) {
         new Thread(new MultiplexerTimeServer(8080), "NIO thread").start();
     }
-
 
     private static class MultiplexerTimeServer implements Runnable {
         private Selector selector;

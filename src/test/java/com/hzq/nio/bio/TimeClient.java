@@ -1,5 +1,7 @@
 package com.hzq.nio.bio;
 
+import org.junit.Test;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -9,7 +11,8 @@ import java.net.Socket;
  */
 public class TimeClient {
 
-    public static void main(String[] args) {
+    @Test
+    public void test01() {
         Socket socket = null;
         BufferedReader in = null;
         PrintWriter out = null;
@@ -25,16 +28,20 @@ public class TimeClient {
             e.printStackTrace();
         } finally {
             try {
-                socket.close();
+                if (socket != null)
+                    socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                in.close();
+                if (in != null)
+                    in.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            out.close();
+            if (out != null)
+                out.close();
         }
     }
+
 }

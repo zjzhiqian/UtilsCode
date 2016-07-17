@@ -1,5 +1,7 @@
 package com.hzq.nio.bio;
 
+import org.junit.Test;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +15,10 @@ import java.util.Date;
  * Created by hzq on 16/7/16.
  */
 public class TimeServer {
-    public static void main(String[] args) throws IOException {
+
+
+    @Test
+    public void test01() throws IOException{
         Integer port = 8080;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("socket start ...port:" + port);
@@ -23,11 +28,10 @@ public class TimeServer {
                 new Thread(new TimeServerHandler(socket)).start();
             }
         }
-
     }
 
 
-    private static class TimeServerHandler implements Runnable {
+    private  class TimeServerHandler implements Runnable {
 
         private Socket socket;
 
