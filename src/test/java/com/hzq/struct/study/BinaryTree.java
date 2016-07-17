@@ -2,7 +2,7 @@ package com.hzq.struct.study;
 
 /**
  * 普通二叉树Java代码
- * Created by hzq on 16/5/3.
+ * Created by hzq on 15/5/3.
  */
 public class BinaryTree<T extends Comparable> {
     private BinaryNode<T> root;

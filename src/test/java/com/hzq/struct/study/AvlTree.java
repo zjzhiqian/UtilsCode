@@ -2,7 +2,7 @@ package com.hzq.struct.study;
 
 /**
  * 平衡树的实现
- * Created by hzq on 16/5/5.
+ * Created by hzq on 15/5/5.
  */
 public class AvlTree<T extends Comparable> {
 
