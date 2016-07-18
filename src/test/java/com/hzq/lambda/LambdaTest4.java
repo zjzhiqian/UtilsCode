@@ -41,8 +41,6 @@ public class LambdaTest4 {
         isHigh1.and(User::isHigh).or(User::isHigh);
 
 
-
-
     }
 
 }

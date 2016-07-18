@@ -59,6 +59,7 @@
 
         <kafka-version>0.8.2.2</kafka-version>
 
+        <netty-version>5.0.0.Alpha1</netty-version>
 
     </properties>
 
@@ -290,6 +291,15 @@
             <artifactId>kafka_2.9.1</artifactId>
             <version>${kafka-version}</version>
         </dependency>
+
+        <!--netty-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty-version}</version>
+        </dependency>
+
+
 
         <!--servlet-->
         <dependency>
