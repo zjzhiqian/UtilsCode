@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * AsyncTimeServerHandler
  * Created by hzq on 16/7/17.
  */
 public class AsyncTimeServerHandler implements Runnable {
