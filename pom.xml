@@ -57,6 +57,9 @@
 
         <google-guava-versin>18.0</google-guava-versin>
 
+        <kafka-version>0.8.2.2</kafka-version>
+
+        <netty-version>5.0.0.Alpha1</netty-version>
 
     </properties>
 
@@ -282,6 +285,21 @@
             <version>${redis-spring-data-version}</version>
         </dependency>
 
+        <!--kafka-->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.9.1</artifactId>
+            <version>${kafka-version}</version>
+        </dependency>
+
+        <!--netty-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty-version}</version>
+        </dependency>
+
+
 
         <!--servlet-->
         <dependency>
@@ -299,6 +317,9 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pkcs7.jar</systemPath>
         </dependency>
+
+
+
 
         <!--test-->
         <dependency>

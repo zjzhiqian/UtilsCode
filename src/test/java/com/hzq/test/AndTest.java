@@ -33,4 +33,10 @@ public class AndTest {
 
     }
 
+
+    @Test
+    public void test03(){
+        Integer a = null;
+        System.out.println(a.intValue());
+    }
 }

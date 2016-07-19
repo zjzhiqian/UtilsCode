@@ -21,5 +21,7 @@ public class StringTest {
         System.out.println((aa + cc).intern() == bb.intern());
         System.out.println(aa + cc == bb);
 
+
+        final String s = "s";
     }
 }

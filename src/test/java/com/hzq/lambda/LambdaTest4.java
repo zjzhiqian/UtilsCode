@@ -1,19 +1,15 @@
 package com.hzq.lambda;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import com.hzq.entity.User;
+import com.hzq.testEntity.User;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.function.Function;
+import java.util.function.IntPredicate;
+import java.util.function.IntSupplier;
+import java.util.function.Predicate;
 
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.reducing;
-import static java.util.stream.Collectors.toList;
+import static java.util.Comparator.comparing;
 
 
 /**
@@ -22,44 +18,29 @@ import static java.util.stream.Collectors.toList;
  */
 public class LambdaTest4 {
 
-
     @Test
     public void test01() {
-        Function<String, String> set01 = User::set01;
+        //返回值是boolean 可以用Predicate 或  Function<User, Boolean> 接收
+        final Function<User, Boolean> isHigh = User::isHigh;
+        Predicate<User> us = User::isHigh;
+        System.out.println(isHigh.apply(new User()));
+        System.out.println(us.test(new User()));
 
-        List<Integer> a = Lists.newArrayList(1, 2, 3);
+        final IntPredicate intPredicate = (int i) -> i % 2 == 0;
+        System.out.println(intPredicate.test(100000));
 
-//        final Stream<Integer> boxed = a.stream().map(Object::toString).mapToInt(Integer::parseInt).boxed();
-//        final IntStream intStream = a.stream().map(Object::toString).mapToInt(Integer::parseInt);
+        int i = 3;
+        final IntSupplier doubleSupplier = () -> i;
+//        i = 4;
 
-        final IntStream range = IntStream.range(1, 2);
+
+        Lists.newArrayList(1,3,4,5).sort(comparing(Integer::toHexString).reversed().thenComparing(Integer::byteValue));
+
+
+        final Predicate<User> isHigh1 = User::isHigh;
+        isHigh1.and(User::isHigh).or(User::isHigh);
+
 
     }
-
-
-    @Test
-    public void test02() {
-        //斐波拉契数列
-        final Stream<int[]> limit = Stream
-                .iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]})
-                .limit(10);
-        limit.forEach(t -> System.out.println(t[0] + " " + t[1]));
-
-
-        List<String> b = new ArrayList<>();
-        System.out.println(b.stream().collect(reducing((a, c) -> a + c)));
-
-    }
-
-
-    @Test
-    public void test03() {
-        final Stream<int[]> limit = Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]}).limit(10);
-        final Optional<int[]> first = limit.findFirst();
-        System.out.println(first.get()[0]+"  "+first.get()[1]);
-
-//        final Supplier<Double> random = Math::random;
-    }
-
 
 }

@@ -8,10 +8,8 @@ package com.hzq.project;
 public class GenericTest01 {
 
     public static void main(String[] args) {
-
+        new Thread(()->System.out.println(3));
     }
 
-    public String concat(String a, String b, String c) {
-        return a + b + c;
-    }
+
 }

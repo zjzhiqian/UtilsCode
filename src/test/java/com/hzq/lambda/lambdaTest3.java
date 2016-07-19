@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.*;
  * LambdaTest3
  * Created by hzq on 16/5/22.
  */
-public class LambdaTest3 {
+public class lambdaTest3 {
 
 
     private static List<String> strList;
