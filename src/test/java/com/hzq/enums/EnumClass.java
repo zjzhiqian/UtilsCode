@@ -101,6 +101,9 @@ public class EnumClass {
 
 
         System.out.println(Color.netx());
+
+
+        System.out.println(Color.BLACK);
     }
 }
 

@@ -16,6 +16,10 @@ public class ClassLoaderTreeTest {
             System.out.println(loader.toString());
             loader = loader.getParent();
         }
+
+        Integer n1 = new Integer(47);
+        Integer n2 = 47;
+        System.out.println(n1 == n2);
     }
 
 
