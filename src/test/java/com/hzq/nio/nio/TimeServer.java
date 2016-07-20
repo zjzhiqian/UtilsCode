@@ -22,6 +22,8 @@ import java.util.Set;
 public class TimeServer {
 
     public static void main(String[] args) {
+
+        System.out.println(System.getProperty("line.separator"));
         new Thread(new MultiplexerTimeServer(8080), "NIO thread").start();
     }
 

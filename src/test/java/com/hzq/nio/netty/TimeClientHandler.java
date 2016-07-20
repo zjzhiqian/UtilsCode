@@ -10,18 +10,22 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public class TimeClientHandler extends ChannelHandlerAdapter {
 
-    private final ByteBuf firstMessage;
+
+    byte[] req;
 
     TimeClientHandler() {
-        byte[] req = "query time order".getBytes();
-        firstMessage = Unpooled.buffer(req.length);
-        firstMessage.writeBytes(req);
+        req = ("query time order" + System.getProperty("line.separator")).getBytes();
     }
 
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(firstMessage);
+        ByteBuf firstMessage;
+        for (int i = 0; i < 100; i++) {
+            firstMessage = Unpooled.buffer(req.length);
+            firstMessage.writeBytes(req);
+            ctx.writeAndFlush(firstMessage);
+        }
     }
 
     @Override
