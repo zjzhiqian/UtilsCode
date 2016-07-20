@@ -8,10 +8,9 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
+ * ReadWriteLockTest
  * Created by hzq on 16/5/10.
  */
-
-
 //在读的过程中别的线程是无法调用写的方法的
 //在写的过程中也是无法调用读的方法的
 //只有在读的时候才能同时调用读的方法，当然在写的时候不能同时调用写的方法

@@ -14,15 +14,11 @@ public class ReentrantLockTest {
 
         Lock l = new ReentrantLock();
 
-        new Thread(()->{
-            l.lock();
-        }).start();
+        new Thread(l::lock).start();
 
 
 
-        new Thread(()->{
-            l.lock();
-        }).start();
+        new Thread(l::lock).start();
 
 
 

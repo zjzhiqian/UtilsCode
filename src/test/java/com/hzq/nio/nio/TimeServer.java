@@ -1,7 +1,5 @@
 package com.hzq.nio.nio;
 
-import org.junit.Test;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -100,7 +98,7 @@ public class TimeServer {
                     ByteBuffer readBuffer = ByteBuffer.allocate(1024);
                     int readBytes = sc.read(readBuffer);
                     if (readBytes > 0) {
-                        readBuffer.flip();//将缓冲区当前的limit设置为position,position设置为0,用于后续操作
+                        readBuffer.flip();//将缓冲区当前的limit设置为position,position设置为0,用于后续操作(从写模式->读模式)
                         byte[] bytes = new byte[readBuffer.remaining()];
                         readBuffer.get(bytes);//将缓冲区可读的字节数组赋值到new的bytes数组中
                         String body = new String(bytes, "UTF-8");

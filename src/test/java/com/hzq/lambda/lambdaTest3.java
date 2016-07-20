@@ -4,15 +4,15 @@ import com.google.common.collect.Lists;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.util.StringUtils;
 
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentMap;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 
 /**
@@ -38,6 +38,7 @@ public class lambdaTest3 {
         Long count = strList.stream().filter(arg -> arg.length() > 3).count();
         Long count2 = strList.parallelStream().filter(arg -> arg.length() > 2).count();
 
+
         System.out.println(count);
         System.out.println(count2);
         //在执行stream,filter时,并没有执行,stream操作符是延迟执行的
@@ -47,6 +48,10 @@ public class lambdaTest3 {
         });
         System.out.println("====");
         stringStream.count();
+
+
+        strList.sort(comparing(String::length));
+
     }
 
     @Test
@@ -115,7 +120,7 @@ public class lambdaTest3 {
         final Stream<String> stringStream2 = Stream.of("看好3", "我去额2", "4任务认为", "3二为");
         //stream.sorted方法 返回一个新的已排序的流
         stringStream2
-                .sorted(Comparator.comparing(String::length).thenComparing(arg -> arg.indexOf("二")).reversed())
+                .sorted(comparing(String::length).thenComparing(arg -> arg.indexOf("二")).reversed())
                 .peek(System.out::println)
                 .count();
 //        stringStream2.sorted(String::compareToIgnoreCase)
@@ -137,7 +142,7 @@ public class lambdaTest3 {
         //.max
         final Stream<String> stringStream = Stream.of("看好3", "我去额2", "4任务认为", "3二为");
         final Optional<String> max = stringStream
-                .max(Comparator.comparing(String::length));
+                .max(comparing(String::length));
         if (max.isPresent()) {
             System.out.println(max.get());
         }
@@ -275,6 +280,11 @@ public class lambdaTest3 {
         User d = new User("name30", 3);
         final List<User> users = Arrays.asList(a, b, c, d);
 
+        final List<String> collect9 = users.parallelStream().map(User::getName).collect(toList());
+        System.out.println(collect9);
+        System.out.println(".........");
+
+
         //根据年龄分组 groupingByConcurrent会得到一个Concurrent的Map
         final Map<Integer, List<User>> collect = users.stream().collect(groupingBy(User::getAge));
         System.out.println(collect);
@@ -292,7 +302,7 @@ public class lambdaTest3 {
         System.out.println(collect3);
         System.out.println("collect3========");
         //分组得出最大值 maxBy
-        final Map<String, Optional<User>> collect4 = users.stream().collect(groupingBy(User::getName, maxBy(Comparator.comparing(User::getAge))));
+        final Map<String, Optional<User>> collect4 = users.stream().collect(groupingBy(User::getName, maxBy(comparing(User::getAge))));
         System.out.println(collect4);
         System.out.println("collect4========");
         //分组,返回统计信息 summarizingInt 包含数量,sum,min,max,average
@@ -300,7 +310,7 @@ public class lambdaTest3 {
         System.out.println(collect5);
         System.out.println("collect5========");
         //mapping 先根据Age进行分组,然后根据Name的length比较得出最大值 使用mapping
-        final Map<Integer, Optional<String>> collect6 = users.stream().collect(groupingBy(User::getAge, mapping(User::getName, maxBy(Comparator.comparing(String::length)))));
+        final Map<Integer, Optional<String>> collect6 = users.stream().collect(groupingBy(User::getAge, mapping(User::getName, maxBy(comparing(String::length)))));
         System.out.println(collect6);
         System.out.println("collect6========");
         //reducing 根据name分组,然后把每个进行分组聚合
