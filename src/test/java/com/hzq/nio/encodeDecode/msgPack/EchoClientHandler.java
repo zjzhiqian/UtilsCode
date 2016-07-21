@@ -13,6 +13,12 @@ import java.util.List;
  */
 public class EchoClientHandler extends ChannelHandlerAdapter {
     @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        super.exceptionCaught(ctx, cause);
+    }
+
+    @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         List<User> users = new ArrayList<>();
         for (int i = 0; i < 1000; i++) {

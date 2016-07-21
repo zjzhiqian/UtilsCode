@@ -1,7 +1,6 @@
 package com.hzq.nio.encodeDecode.msgPack;
 
 import com.hzq.entity.User;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -25,7 +24,6 @@ public class EchoServerHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("111");
         List users = (List) msg;
         users.forEach(System.out::println);
 
