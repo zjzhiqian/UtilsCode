@@ -44,20 +44,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.apache.kafka:kafka_2.9.1:0.8.2.2" level="project" />
-    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.9.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.kafka:kafka-clients:0.8.2.2" level="project" />
-    <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.1.1.7" level="project" />
-    <orderEntry type="library" name="Maven: net.jpountz.lz4:lz4:1.2.0" level="project" />
-    <orderEntry type="library" name="Maven: com.yammer.metrics:metrics-core:2.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.zookeeper:zookeeper:3.4.6" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.6.1" level="project" />
-    <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
-    <orderEntry type="library" name="Maven: jline:jline:0.9.94" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty:3.7.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:3.2" level="project" />
-    <orderEntry type="library" name="Maven: com.101tec:zkclient:0.3" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-all:5.0.0.Alpha1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.2.5.RELEASE" level="project" />
@@ -99,7 +85,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:jconsole:1.8.0">
         <CLASSES>
-          <root url="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/lib/jconsole.jar!/" />
+          <root url="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/lib/jconsole.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -108,7 +94,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.alibaba:tools:1.8.0">
         <CLASSES>
-          <root url="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/lib/tools.jar!/" />
+          <root url="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home/lib/tools.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -137,6 +123,9 @@
     <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:3.2" level="project" />
     <orderEntry type="library" name="Maven: com.101tec:zkclient:0.3" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-all:5.0.0.Alpha1" level="project" />
+    <orderEntry type="library" name="Maven: org.msgpack:msgpack:0.6.12" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.18.1-GA" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="module-library">
       <library name="Maven: javabuilder:javabuilder:1.0">
