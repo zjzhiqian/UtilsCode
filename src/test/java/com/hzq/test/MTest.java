@@ -7,6 +7,6 @@ public class MTest {
 
 
     public static void main(String... ag) {
-        System.out.println(InitClass.sta);
+
     }
 }

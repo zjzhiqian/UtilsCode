@@ -1,11 +1,16 @@
 package com.hzq.nio.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 
 /**
@@ -23,6 +28,7 @@ public class TimeServer {
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 1024)
                     .childHandler(new ChildChannelHandler());
+            System.out.println("server started , port : " + port);
             //绑定端口,同步等待成功
             ChannelFuture future = serverBootstrap.bind(port).sync();
             //进行链路阻塞
@@ -36,7 +42,10 @@ public class TimeServer {
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
         @Override
         protected void initChannel(SocketChannel ch) throws Exception {
-            ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
+//            ch.pipeline().addLast(new LineBasedFrameDecoder(1024));
+//            ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, Unpooled.copiedBuffer("_$".getBytes())));
+            ch.pipeline().addLast(new FixedLengthFrameDecoder(5));
+            ch.pipeline().addLast(new StringDecoder());
             ch.pipeline().addLast(new TimeServerHandler());
         }
     }
