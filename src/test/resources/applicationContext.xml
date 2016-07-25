@@ -45,13 +45,13 @@
 
     <bean id="simpleSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="master"/>
-        <property name="mapperLocations" value="classpath*:com/hzq/project/*/dao/mapper/*Mapper.xml"/>
+        <property name="mapperLocations" value="classpath*:mapper/*Mapper.xml"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="simpleSqlSessionFactory"/>
         <property name="basePackage" value="com.**.*.dao"/>
-        <!--<property name="basePackage" value="com.hzq.project.*.dao"/>-->
         <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
     </bean>
 
@@ -59,23 +59,4 @@
         <constructor-arg ref="simpleSqlSessionFactory"/>
     </bean>
 
-    <!-- 配置事务管理器
-    <bean id="transactionManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dynamicDataSource"></property>
-    </bean>
-
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="*" />
-        </tx:attributes>
-    </tx:advice>
-     AOP配置提供事务增强 让service包下的所有Bean的所有方法拥有事务
-
-    <aop:config proxy-target-class="true">
-        <aop:pointcut expression="execution(* com.qianye.zhaimi.nami.service..*(..))"
-            id="serviceMethod" />
-        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
-    </aop:config>
-    -->
 </beans>

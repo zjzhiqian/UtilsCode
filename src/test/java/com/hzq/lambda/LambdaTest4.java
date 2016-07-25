@@ -1,7 +1,7 @@
 package com.hzq.lambda;
 
 import com.google.common.collect.Lists;
-import com.hzq.testEntity.User;
+import com.hzq.entity.User;
 import org.junit.Test;
 
 import java.util.function.Function;

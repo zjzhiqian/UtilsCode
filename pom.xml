@@ -63,8 +63,8 @@
         <msgpack-version>0.6.12</msgpack-version>
 
 
-
         <dbunit-version>2.4.9</dbunit-version>
+        <mock-version>2.0.8</mock-version>
     </properties>
 
 
@@ -311,9 +311,6 @@
         </dependency>
 
 
-
-
-
         <!--servlet-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -332,8 +329,6 @@
         </dependency>
 
 
-
-
         <!--test-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -341,6 +336,14 @@
             <version>${spring-version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-mock</artifactId>
+            <version>2.0.8</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>junit</groupId>
@@ -357,6 +360,16 @@
             <type>jar</type>
             <scope>test</scope>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-mock</artifactId>
+            <version>${mock-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!--dbUnit-->
+
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -422,7 +435,6 @@
                         <testFailureIgnore>true</testFailureIgnore>
                     </configuration>
                 </plugin>
-
 
 
                 <plugin>

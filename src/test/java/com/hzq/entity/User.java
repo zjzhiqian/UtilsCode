@@ -22,6 +22,12 @@ public class User {
         this.age = age;
     }
 
+
+    public User(){}
+    public boolean isHigh() {
+        return true;
+    }
+
     public static String set01(String key1) {
         return null;
     }

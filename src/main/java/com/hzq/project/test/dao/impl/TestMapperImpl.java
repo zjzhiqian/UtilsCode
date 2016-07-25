@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 
+
 /**
  * testMapper
  * Created by hzq on 16/5/17.
@@ -20,6 +21,12 @@ public class TestMapperImpl implements TestMapper {
     public Map getOne() {
         String name = this.getClass().getInterfaces()[0].getName();
         return sqlsession.selectOne(name + ".getOne");
+    }
+
+    @Override
+    public Map getTwo() {
+        String name = this.getClass().getInterfaces()[0].getName();
+        return sqlsession.selectOne(name + ".getTwo");
     }
 
 
