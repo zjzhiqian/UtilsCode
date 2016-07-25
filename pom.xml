@@ -60,6 +60,7 @@
         <kafka-version>0.8.2.2</kafka-version>
 
         <netty-version>5.0.0.Alpha1</netty-version>
+        <msgpack-version>0.6.12</msgpack-version>
 
 
 
@@ -301,6 +302,15 @@
             <artifactId>netty-all</artifactId>
             <version>${netty-version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.msgpack/msgpack -->
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack</artifactId>
+            <version>${msgpack-version}</version>
+        </dependency>
+
+
 
 
 

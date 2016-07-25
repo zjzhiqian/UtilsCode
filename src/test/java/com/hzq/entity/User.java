@@ -1,8 +1,11 @@
 package com.hzq.entity;
 
+import org.msgpack.annotation.MessagePackBeans;
+
 /**
  * Created by hzq on 16/7/5.
  */
+@MessagePackBeans
 public class User {
 
     private Integer age;
@@ -16,7 +19,7 @@ public class User {
     }
 
     public User(Integer age) {
-
+        this.age = age;
     }
 
     public static String set01(String key1) {
@@ -33,5 +36,12 @@ public class User {
 
     public static String set04(String key4) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "age=" + age +
+                '}';
     }
 }
