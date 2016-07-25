@@ -17,26 +17,21 @@ public class TestImplTestCase extends BaseDbUnitTestCase {
     @Autowired
     private TestMapper testMapper;
 
-
-    @Override
-    protected String[] getConfigLocations() {
-        return new String[]{"classpath:applicationContext.xml"};
-    }
-
     @Override
     protected List<String> getXmlName() {
         return ImmutableList.of("/dbunit/test01.xml");
     }
 
     @Test
-    public void test01(){
+    public void test01() {
 
         Map one = testMapper.getOne();
+        System.out.println(1);
 
     }
 
 
-    public void test02(){
+    public void test02() {
         Map two = testMapper.getTwo();
 
     }
