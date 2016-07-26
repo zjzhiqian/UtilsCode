@@ -68,5 +68,7 @@ public class CLHLock {
         System.out.println("线程1释放锁");
         lock.unLock();
 
+        System.out.println("11111");
+
     }
 }
