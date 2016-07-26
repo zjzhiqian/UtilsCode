@@ -29,19 +29,10 @@ public class EchoServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-//                            ch.pipeline().addLast("frame decoder",new LengthFieldBasedFrameDecoder(65535,0,2,0,2));
-//                            ch.pipeline().addLast("frame encoder",new LengthFieldPrepender(2));
-//
-//
-//                            ch.pipeline().addLast("msgPack encoder", new MsgPackEncoder());
-//                            ch.pipeline().addLast("msgPack decoder", new MsgPackDecoder());
-
                             ch.pipeline().addLast("frame decoder", new LengthFieldBasedFrameDecoder(65535, 0, 2, 0, 2));
                             ch.pipeline().addLast("msgPack decoder", new MsgPackDecoder());
                             ch.pipeline().addLast("frame encoder", new LengthFieldPrepender(2));
                             ch.pipeline().addLast("msgPack encoder", new MsgPackEncoder());
-
-
                             ch.pipeline().addLast(new EchoServerHandler());
                         }
                     });

@@ -15,9 +15,9 @@ public class MsgPackDecoder extends MessageToMessageDecoder<ByteBuf> {
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
         int length = msg.readableBytes();
-        byte[] array = new byte[length];
-        msg.getBytes(msg.readerIndex(),array,0,length);
+        byte[] bytes = new byte[length];
+        msg.getBytes(msg.readerIndex(),bytes,0,length);
         MessagePack messagePack = new MessagePack();
-        out.add(messagePack.read(array));
+        out.add(messagePack.read(bytes));
     }
 }

@@ -13,6 +13,7 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 
 /**
+ * TimeClient
  * Created by hzq on 16/7/19.
  */
 public class TimeClient {
