@@ -16,13 +16,14 @@ public class TimeServerHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
-        byte[] req = new byte[buf.readableBytes()];
-        buf.readBytes(req);
-        String body = new String(req, "UTF-8");
+//        ByteBuf buf = (ByteBuf) msg;
+//        byte[] req = new byte[buf.readableBytes()];
+//        buf.readBytes(req);
+//        String body = new String(req, "UTF-8");
+        String body = (String)msg;
         System.out.println("time server received order : " + body);
-        String currentTime = "query time order".equalsIgnoreCase(body) ? new Date().toString() : "bad order";
-        ByteBuf resp = Unpooled.copiedBuffer((currentTime + System.getProperty("line.separator")).getBytes());
+        String currentTime = "query time order".equalsIgnoreCase(body) ? new Date().toString()+"_$" : "bad order";
+        ByteBuf resp = Unpooled.copiedBuffer((currentTime).getBytes());
         ctx.write(resp);
     }
 

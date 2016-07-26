@@ -6,6 +6,7 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 
 /**
+ * TimeClientHandler
  * Created by hzq on 16/7/19.
  */
 public class TimeClientHandler extends ChannelHandlerAdapter {
@@ -14,7 +15,8 @@ public class TimeClientHandler extends ChannelHandlerAdapter {
     byte[] req;
 
     TimeClientHandler() {
-        req = ("query time order" + System.getProperty("line.separator")).getBytes();
+//        req = ("query time order" + System.getProperty("line.separator")).getBytes();
+        req = ("query time order" + "_$").getBytes();
     }
 
 
@@ -30,11 +32,12 @@ public class TimeClientHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
-        byte[] req = new byte[buf.readableBytes()];
-        buf.readBytes(req);
-        String body = new String(req, "UTF-8");
-        System.out.println("now is : " + body);
+//        ByteBuf buf = (ByteBuf) msg;
+//        byte[] req = new byte[buf.readableBytes()];
+//        buf.readBytes(req);
+//        String body = new String(req, "UTF-8");
+//        System.out.println("now is : " + body);
+        System.out.println("now is : " + msg);
     }
 
     @Override
