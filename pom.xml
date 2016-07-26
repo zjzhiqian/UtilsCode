@@ -61,6 +61,7 @@
 
         <netty-version>5.0.0.Alpha1</netty-version>
         <msgpack-version>0.6.12</msgpack-version>
+        <protobuf-version>2.5.0</protobuf-version>
 
     </properties>
 
@@ -306,9 +307,18 @@
             <artifactId>msgpack</artifactId>
             <version>${msgpack-version}</version>
         </dependency>
-
-
-
+        <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf-version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jboss.marshalling/jboss-marshalling -->
+        <dependency>
+            <groupId>org.jboss.marshalling</groupId>
+            <artifactId>jboss-marshalling</artifactId>
+            <version>1.4.10.Final</version>
+        </dependency>
 
 
         <!--servlet-->
@@ -327,8 +337,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pkcs7.jar</systemPath>
         </dependency>
-
-
 
 
         <!--test-->
@@ -409,7 +417,6 @@
                         <testFailureIgnore>true</testFailureIgnore>
                     </configuration>
                 </plugin>
-
 
 
                 <plugin>

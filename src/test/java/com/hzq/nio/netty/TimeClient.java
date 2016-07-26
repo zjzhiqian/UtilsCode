@@ -10,6 +10,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LineBasedFrameDecoder;
 
 /**
+ * TimeClient
  * Created by hzq on 16/7/19.
  */
 public class TimeClient {
