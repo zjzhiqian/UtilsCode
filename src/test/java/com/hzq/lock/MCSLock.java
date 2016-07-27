@@ -19,8 +19,13 @@ public class MCSLock implements Lock {
     }
 
 
-    AtomicReference<QNode> tail;
-    ThreadLocal<QNode> myNode;
+    AtomicReference<QNode> tail = new AtomicReference<>();
+    ThreadLocal<QNode> myNode = new ThreadLocal<QNode>() {
+        @Override
+        protected QNode initialValue() {
+            return new QNode();
+        }
+    };
 
     @Override
     public void lock() {
@@ -40,7 +45,7 @@ public class MCSLock implements Lock {
     public void unlock() {
         QNode qnode = myNode.get();
         if (qnode.next == null) {
-            if (tail.compareAndSet(qnode, null))
+            if (tail.compareAndSet(qnode, null))  //qNode下一个节点没有值,原子操作把tail设置为qNode,设置失败了表示其他线程修改了tail
                 return;
 
             // wait until predecessor fills in its next field
@@ -73,6 +78,9 @@ public class MCSLock implements Lock {
     }
 
     public static void main(String[] args) {
+        final MCSLock mcsLock = new MCSLock();
+        mcsLock.lock();
+        mcsLock.lock();
 
 
     }
