@@ -1,9 +1,13 @@
 package com.hzq.project.test.web;
 
+import com.hzq.project.test.entity.User;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -27,15 +31,39 @@ public class TestController {
 //    }
 //    @ModelAttribute("key")
 //    public String tt3() {
-//        System.out.println("Controller modelAttibuteMethod");
+//        System.out.println("Controller modelAttributeMethod");
 //        return "123333";
 //    }
 
+    @ModelAttribute("1")
+    public String test001(@ModelAttribute User user) {
+        System.out.println(1);
+        return "3";
+    }
+
 
     @ResponseBody
-    @RequestMapping(value = "/test")
-    public Date getById(@RequestParam MultiValueMap map) {
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public Date getByIdPost(HttpServletRequest request) {
+        request.getSession().setAttribute("1", "2");
+        return new Date();
+    }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/test", method = RequestMethod.DELETE)
+    public Date getByIdDelete(HttpServletRequest request) {
+        request.getSession().setAttribute("1", "2");
+        return new Date();
+    }
+
+
+    @ResponseBody
+//    @ResponseStatus(code = HttpStatus.CONFLICT,reason = "理由")
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @RequestMapping(path = "/test", headers = {"Accept-Encoding"})
+    public Date getById(HttpServletRequest request) {
+        request.getSession().setAttribute("1", "2");
         return new Date();
     }
 }
