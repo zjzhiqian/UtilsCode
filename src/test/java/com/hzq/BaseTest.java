@@ -1,14 +1,22 @@
 package com.hzq;
 
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import org.junit.Test;
+
+import java.util.function.Function;
 
 /**
  * BaseTest
  * Created by hzq on 16/6/9.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:context-spring.xml", "classpath:context-mysql-datasource.xml"})
 public class BaseTest {
+
+    @Test
+    public void test01() {
+        final Function<String, Integer> strToInt = String::length;
+
+        final String s = new StringBuilder().append("1").append("3").toString();
+        final String s1 = new StringBuffer().append("3").append("3223").toString();
+    }
+
 }
