@@ -32,7 +32,7 @@ public class SetConfig {
         while (ZooKeeper.States.CONNECTED != zk.getState()) {
             TimeUnit.SECONDS.sleep(3);
 
-            JSON.parse()
+//            JSON.parse()
         }
 
         zk.addAuthInfo(auth_type, auth_psw.getBytes());
