@@ -65,6 +65,7 @@
 
         <dbunit-version>2.4.9</dbunit-version>
         <mock-version>2.0.8</mock-version>
+        <zookeeper-version>3.4.6</zookeeper-version>
     </properties>
 
 
@@ -325,6 +326,15 @@
             <artifactId>protobuf-java</artifactId>
             <version>2.6.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper -->
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>${zookeeper-version}</version>
+            <type>pom</type>
+        </dependency>
+
 
 
         <!--logBack start-->
