@@ -5,6 +5,8 @@ import com.hzq.project.common.validator.commonValidator.CheckNullValidator;
 import com.hzq.project.common.validator.commonValidator.RetValidator;
 import com.hzq.project.common.validator.commonValidator.Validator;
 
+import java.math.BigDecimal;
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -74,7 +76,11 @@ public class ValidatorComposite<T> {
     }
 
     public static void main(String[] args) {
-        new ValidatorComposite<>().tt();
+//        new ValidatorComposite<>().tt();
+        BigDecimal d = new BigDecimal("0.02");
+        final String format = MessageFormat.format("213123{0},{1},{2}", "3231231231232312312313123123123123123123",new BigDecimal(99),d);
+        System.out.println(format);
+
     }
 
 

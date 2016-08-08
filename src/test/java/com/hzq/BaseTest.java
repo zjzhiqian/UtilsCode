@@ -1,9 +1,14 @@
 package com.hzq;
 
 
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.util.*;
 import java.util.function.Function;
+
+import static java.util.Comparator.comparing;
 
 /**
  * BaseTest
@@ -19,4 +24,20 @@ public class BaseTest {
         final String s1 = new StringBuffer().append("3").append("3223").toString();
     }
 
+
+    public <T> Collection inttt(Collection<T>... lists) {
+        Collection<T> ts = Arrays.stream(lists).min(comparing(Collection::size)).orElseThrow(RuntimeException::new);
+        return Arrays.stream(lists)
+                .map(list -> CollectionUtils.intersection(list, ts))
+                .reduce(CollectionUtils::intersection).orElseThrow(RuntimeException::new);
+    }
+
+
+    public static void main(String[] args) {
+//        final BigDecimal divide = new BigDecimal(3).divide(new BigDecimal(5),4, BigDecimal.ROUND_HALF_DOWN);
+
+        final BigDecimal divide = new BigDecimal(3).divide(new BigDecimal(5),3,BigDecimal.ROUND_HALF_DOWN);
+
+        System.out.println(divide);
+    }
 }
