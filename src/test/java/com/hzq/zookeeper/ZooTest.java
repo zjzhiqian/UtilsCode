@@ -21,7 +21,7 @@ public class ZooTest {
         //参数4:标识当前会话是否支持只读,这台机器与过半机器失去了网络连接,是否提供服务
         //参数5:  两个参数 sessionId sessionPsw 确定一个会话
         ZooKeeper zooKeeper = new ZooKeeper("192.168.29.103:2181", 3000, event -> {
-            System.out.println("watching event:" + event);
+            System.out.println("watching event change :    " + event);
             if (Watcher.Event.KeeperState.SyncConnected == event.getState()) {
                 latch.countDown();
                 System.out.println("countDown");
@@ -75,7 +75,6 @@ public class ZooTest {
                 e.printStackTrace();
             }
         });
-
 
 
         //getData
