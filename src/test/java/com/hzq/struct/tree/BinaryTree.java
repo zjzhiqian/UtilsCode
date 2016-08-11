@@ -1,4 +1,4 @@
-package com.hzq.struct;
+package com.hzq.struct.tree;
 
 /**
  * 普通二叉树Java代码

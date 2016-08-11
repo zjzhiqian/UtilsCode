@@ -1,8 +1,5 @@
 package com.dbunit.base;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Maps;
-import org.apache.commons.io.FileUtils;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;

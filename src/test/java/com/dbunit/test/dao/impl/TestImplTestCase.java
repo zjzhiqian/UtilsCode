@@ -10,9 +10,31 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * DBUnit依赖jar
  * Created by hzq on 16/7/18.
  */
 public class TestImplTestCase extends BaseDbUnitTestCase {
+//    依赖jar
+//    <!--dbUnit-->
+//    <dependency>
+//    <groupId>org.dbunit</groupId>
+//    <artifactId>dbunit</artifactId>
+//    <version>${dbunit-version}</version>
+//    <type>jar</type>
+//    <scope>test</scope>
+//    </dependency>
+//
+//
+//    <dependency>
+//    <groupId>org.springframework</groupId>
+//    <artifactId>spring-mock</artifactId>
+//    <version>${mock-version}</version>
+//    <scope>test</scope>
+//    </dependency>
+
+
+
+
 
     @Autowired
     private TestMapper testMapper;
