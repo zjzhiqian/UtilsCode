@@ -1,6 +1,7 @@
 package com.hzq.zookeeper;
 
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
 import java.util.List;
@@ -68,6 +69,7 @@ public class ZooTest {
         //参数6: stat
         zooKeeper.getChildren("/test", event -> {
             try {
+//                event.getType()= Watcher.Event.EventType.NodeChildrenChanged
                 System.out.println(zooKeeper.getChildren(event.getPath(), true));
             } catch (KeeperException e) {
                 e.printStackTrace();
@@ -78,6 +80,13 @@ public class ZooTest {
 
 
         //getData
+        final byte[] data = zooKeeper.getData("/test", false, null);
+        final String s = new String(data, "UTF-8");
+        System.out.println(s);
+
+
+        final Stat stat = zooKeeper.setData("/test", "123213".getBytes(), -1); //-1表示执行任何version的更新
+        System.out.println(stat);
 
         TimeUnit.SECONDS.sleep(150);
         zooKeeper.close();
