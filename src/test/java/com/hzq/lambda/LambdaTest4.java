@@ -8,6 +8,8 @@ import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
 
@@ -34,7 +36,10 @@ public class LambdaTest4 {
 //        i = 4;
 
 
-        Lists.newArrayList(1,3,4,5).sort(comparing(Integer::toHexString).reversed().thenComparing(Integer::byteValue));
+        Lists.newArrayList(1, 3, 4, 5).sort(comparing(Integer::toHexString).reversed().thenComparing(Integer::byteValue));
+
+
+        final Stream<int[]> limit = Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]}).limit(3);
 
 
         final Predicate<User> isHigh1 = User::isHigh;

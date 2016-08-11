@@ -15,7 +15,7 @@ public class SetConfig {
 
 
     public static final String root = "/myConf";
-    public static final String urlNode = root + "/"+url;
+    public static final String urlNode = root + "/" + url;
     public static final String userNameNode = root + "/username";
     public static final String passwordNode = root + "/password";
 
