@@ -4,6 +4,8 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
+import org.apache.curator.framework.recipes.cache.NodeCache;
+import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.data.Stat;
@@ -42,8 +44,8 @@ public class curatorTest01 {
      *
      * @throws Exception
      */
-    @SuppressWarnings("all")
-    public void test02()throws Exception{
+//    @SuppressWarnings("all")
+    public void test02() throws Exception {
         ExecutorService service = Executors.newFixedThreadPool(3);
         ExponentialBackoffRetry backoffRetry = new ExponentialBackoffRetry(100, 3); //初始sleep时间,最大重试次数
         CuratorFramework client = CuratorFrameworkFactory.newClient("192.168.29.101:2181", backoffRetry);
@@ -53,9 +55,17 @@ public class curatorTest01 {
                 .inBackground((client1, event) -> System.out.println("code:" + event.getResultCode() + ",type:" + event.getType()), service)   //可以传入线程池,不传入的话默认使用zk的EventThread来处理
                 .forPath("/tt", "init".getBytes());
         TimeUnit.SECONDS.sleep(300);
+
+
+        NodeCache nodeCache = new NodeCache(client, "/tt", false);
+        nodeCache.start(true);
+        nodeCache.getListenable().addListener(() ->
+                System.out.println("node data updated ,new data : " + new String(nodeCache.getCurrentData().getData()))
+        );
+
+        TimeUnit.SECONDS.sleep(999);
+
         client.close();
-
-
 
 
     }
