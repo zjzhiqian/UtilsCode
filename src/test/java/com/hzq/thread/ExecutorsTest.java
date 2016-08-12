@@ -17,45 +17,27 @@ public class ExecutorsTest {
     public void test01() {
         //二进制 1是 00000000 00000000 00000000 000000001    正数反码的+1 = 负数
         //      -1是  11111111 11111111 11111111 11111111
-
         int running = -1 << 29;
         int capacity = (1 << 29) - 1;
         int stop = 1 << 29;
-
-        String k = Integer.toBinaryString(running);  //running
-        String j = Integer.toBinaryString(capacity); //capacity
-        String s = Integer.toBinaryString(stop); //stop
+        String k = Integer.toBinaryString(running);  //running  11100000 00000000 00000000 00000000
+        String j = Integer.toBinaryString(capacity); //capacity 00011111 11111111 11111111 11111111
+        String s = Integer.toBinaryString(stop); //stop         10000000 00000000 00000000 00000000
         System.out.println("running:" + k);
         System.out.println("capacity:" + j);
         System.out.println("stop:" + s);
-
-
-        System.out.println(Integer.toBinaryString(0 << COUNT_BITS));
         //running && capacity = workingCount
-
-        //isRunning running<0就是running
-
-        //runStateOf running & ~capacity
-
-        System.out.println(Integer.toBinaryString(running & ~capacity));
-
+        //running && ~capacity = runStateOf
+        //running <0  = isRunning
     }
 
 
     public static void main(String[] args) {
-
-
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(3, 3, 15, TimeUnit.DAYS, new ArrayBlockingQueue<>(15));
-        executor.execute(() -> System.out.println("1"));
-
-
-        System.out.println("kkk");
-        executor.execute(() -> System.out.println("2"));
-
-        System.out.println(COUNT_BITS);
-        int tmp = -1 << COUNT_BITS;
-
-        System.out.println(tmp | 0);
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(0, 1, 15, TimeUnit.DAYS, new ArrayBlockingQueue<>(1));
+//        executor.shutdown();
+        //执行shutDown操作时, 1.ctl本来值为: 11100000 00000000 00000000 00000002
+        //                如果ctl > 0 时,ctl不变,否则 ctl设置为workerCount
+        //                  2.所有线程都进行interrupt
 
 
     }
