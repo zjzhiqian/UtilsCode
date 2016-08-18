@@ -2,9 +2,7 @@ package com.hzq.thread;
 
 import org.junit.Test;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * ExecutorsTest
@@ -33,11 +31,19 @@ public class ExecutorsTest {
 
 
     public static void main(String[] args) {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(0, 1, 15, TimeUnit.DAYS, new ArrayBlockingQueue<>(1));
+//        ThreadPoolExecutor executor = new ThreadPoolExecutor(0, 1, 15, TimeUnit.DAYS, new ArrayBlockingQueue<>(1));
 //        executor.shutdown();
         //执行shutDown操作时, 1.ctl本来值为: 11100000 00000000 00000000 00000002
         //                如果ctl > 0 时,ctl不变,否则 ctl设置为workerCount
         //                  2.所有线程都进行interrupt
+
+
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 3, 14, TimeUnit.DAYS, new LinkedBlockingDeque<>(), r -> {
+            Thread t = new Thread();
+//            t.setDaemon(true);
+            return t;
+        });
+        threadPoolExecutor.prestartAllCoreThreads();
 
 
     }

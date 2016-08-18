@@ -29,21 +29,17 @@ if (window.WebSocket) {
 		ta.value = "";
 		ta.value = "WebSocket 关闭!"; 
 	};
-}
-else
-	{
+} else {
 	alert("抱歉，您的浏览器不支持WebSocket协议!");
-	}
+}
 
 function send(message) {
 	if (!window.WebSocket) { return; }
 	if (socket.readyState == WebSocket.OPEN) {
 		socket.send(message);
+	} else {
+		alert("WebSocket连接没有建立成功!");
 	}
-	else
-		{
-		  alert("WebSocket连接没有建立成功!");
-		}
 }
 </script>
 <form onsubmit="return false;">

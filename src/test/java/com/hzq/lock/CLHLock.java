@@ -10,15 +10,15 @@ public class CLHLock {
      */
 
 
-    class QNode {
-        public volatile boolean locked = false;
+    private class QNode {
+        volatile boolean locked = false;
     }
 
-    private AtomicReference<QNode> tail = new AtomicReference(new QNode());
+    private AtomicReference<QNode> tail = new AtomicReference<>(new QNode());
     private ThreadLocal<QNode> myNode;
     private ThreadLocal<QNode> myPre;
 
-    public CLHLock() {
+    CLHLock() {
         myNode = new ThreadLocal<QNode>() {
             @Override
             protected QNode initialValue() {
@@ -57,7 +57,7 @@ public class CLHLock {
 
         lock.lock(); //线程1获取了锁
         System.out.println("线程1获取锁成功");
-        new Thread(()->{
+        new Thread(() -> {
             System.out.println("线程2尝试获取锁");
             lock.lock();  //线程2获取锁会等待
             System.out.println("线程2获取锁成功");

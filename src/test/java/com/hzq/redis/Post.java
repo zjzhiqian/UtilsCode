@@ -1,7 +1,6 @@
 package com.hzq.redis;
 
 
-import java.util.Date;
 
 /**
  * Post
