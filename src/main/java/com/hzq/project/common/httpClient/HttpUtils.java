@@ -21,6 +21,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.annotation.Description;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 /**
@@ -28,6 +31,8 @@ import org.springframework.stereotype.Component;
  * Created by hzq on 16/4/22.
  */
 @Component
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+@Description("description")
 public class HttpUtils implements InitializingBean {
 
     private static CloseableHttpClient httpclient = null;
