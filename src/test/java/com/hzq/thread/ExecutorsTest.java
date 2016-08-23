@@ -55,7 +55,6 @@ public class ExecutorsTest {
         System.out.println(COUNT_BITS);
         int tmp = -1 << COUNT_BITS;
 
-        System.out.println(tmp | 0);
 
 
     }
