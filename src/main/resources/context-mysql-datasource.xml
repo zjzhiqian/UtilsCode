@@ -59,4 +59,9 @@
         <constructor-arg ref="simpleSqlSessionFactory"/>
     </bean>
 
+
+    <bean id="processor" class="com.hzq.project.common.beanFactoryProcessors.MyBeanFactoryPostProcessor"/>
+
+    <bean id="beanPro" class="com.hzq.project.common.beanFactoryProcessors.MyBeanPostProcessor"/>
+
 </beans>
