@@ -317,6 +317,7 @@ public class lambdaTest3 {
         final Map<Integer, String> collect7 = users.stream().collect(groupingBy(User::getAge, reducing("", User::getName, (s, t) -> s.length() == 0 ? t : s + "," + t)));
         System.out.println(collect7);
         System.out.println("collect7========");
+        //根据age分组  value进行mapping,joining
         final Map<Integer, String> collect8 = users.stream().collect(groupingBy(User::getAge, mapping(User::getName, joining(","))));
         System.out.println(collect8);
         System.out.println("collect8========");

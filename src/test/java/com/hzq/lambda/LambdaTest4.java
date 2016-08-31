@@ -40,7 +40,9 @@ public class LambdaTest4 {
 
 
         final Stream<int[]> limit = Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]}).limit(3);
-
+        limit.forEach(k->{
+            System.out.println(k[0]+"...."+k[1]);
+        });
 
         final Predicate<User> isHigh1 = User::isHigh;
         isHigh1.and(User::isHigh).or(User::isHigh);

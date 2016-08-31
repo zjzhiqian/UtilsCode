@@ -1,4 +1,6 @@
-package com.hzq.project.spi;
+package com.hzq.project.spi.impl;
+
+import com.hzq.project.spi.HelloWord;
 
 /**
  * HelloWordMyImpl

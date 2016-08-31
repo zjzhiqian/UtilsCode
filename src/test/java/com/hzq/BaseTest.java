@@ -1,14 +1,18 @@
 package com.hzq;
 
 
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.*;
 
 /**
  * BaseTest
@@ -36,8 +40,99 @@ public class BaseTest {
     public static void main(String[] args) {
 //        final BigDecimal divide = new BigDecimal(3).divide(new BigDecimal(5),4, BigDecimal.ROUND_HALF_DOWN);
 
-        final BigDecimal divide = new BigDecimal(3).divide(new BigDecimal(5),3,BigDecimal.ROUND_HALF_DOWN);
+        final BigDecimal divide = new BigDecimal(3).divide(new BigDecimal(5), 3, BigDecimal.ROUND_HALF_DOWN);
 
         System.out.println(divide);
+
+
+        String[] split = "hzqqsiiiijfiih".split("");
+        Map<String, Long> collect = Arrays.stream(split).collect(groupingBy(String::toString, counting()));
+        Set<Map.Entry<String, Long>> entries = collect.entrySet();
+        String maxKey = "";
+        Long maxVal = null;
+        for (Map.Entry<String, Long> entry : entries) {
+            if (maxVal == null) {
+                maxVal = entry.getValue();
+                maxKey = entry.getKey();
+                continue;
+            }
+            if (entry.getValue() > maxVal) {
+                maxVal = entry.getValue();
+                maxKey = entry.getKey();
+            }
+        }
+
+
+        Optional<Map.Entry<String, Long>> reduce = Arrays.stream(split).collect(groupingBy(String::valueOf, counting())).entrySet().stream()
+                .reduce((a, b) -> {
+                    if (a.getValue().compareTo(b.getValue()) > 0) {
+                        return a;
+                    } else {
+                        return b;
+                    }
+                });
+        System.out.println(reduce.get().getKey() + "...." + reduce.get().getValue());
+
+
+//        System.out.println("maxKey : " + maxKey + " maxVal : " + maxVal);
+
+
+        LinkedList<String> lin = new LinkedList<>();
+        lin.add("a");
+        lin.add("aa");
+        lin.add("b");
+        lin.add("a");
+        Iterator<String> iterator = lin.iterator();
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            if (next.contains("a")) iterator.remove();
+        }
+        System.out.println(lin);
+
+
+//        IntStream.iterate(0, t -> t++).forEach(System.out::println);
     }
+
+
+    @Test
+    public void test02() {
+        int in = 19;
+        in++;
+        while (isNotPrime(in)) in++;
+        System.out.println(in);
+    }
+
+    public boolean isNotPrime(int next) {
+        int nextRoot = (int) Math.sqrt((double) next);
+        return IntStream.range(2, nextRoot).anyMatch(i -> next % i == 0);
+    }
+
+
+
+
 }
+
+
+class A {
+    A() {
+        i = (j++ != 0) ? ++j : --j;
+        System.out.println(2);
+    }
+    public int i;
+    public static int j = 0;
+}
+
+// M.java
+// ------
+
+class M {
+    public static void main(String[] args) {
+        A a1 = new A();
+
+        System.out.println(a1.i);
+        System.out.println(a2.i);
+    }
+
+    static A a2 = new A();
+}
+

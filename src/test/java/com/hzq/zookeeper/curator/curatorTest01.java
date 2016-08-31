@@ -56,7 +56,7 @@ public class curatorTest01 {
      * @throws Exception
      */
     public void test02() throws Exception {
-//        ExecutorService service = Executors.newFixedThreadPool(3);
+//        ExecutorService services = Executors.newFixedThreadPool(3);
         ExponentialBackoffRetry backoffRetry = new ExponentialBackoffRetry(100, 3); //初始sleep时间,最大重试次数
         CuratorFramework client = CuratorFrameworkFactory.newClient("192.168.29.101:2181", backoffRetry);
         client.start();
