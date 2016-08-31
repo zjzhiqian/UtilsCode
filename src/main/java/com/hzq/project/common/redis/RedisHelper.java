@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 
-@Component
 public class RedisHelper {
 
     private static Logger logger = LoggerFactory.getLogger(RedisHelper.class);

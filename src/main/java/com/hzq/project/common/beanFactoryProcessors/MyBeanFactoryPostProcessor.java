@@ -13,8 +13,8 @@ public class MyBeanFactoryPostProcessor  implements BeanFactoryPostProcessor {
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         System.err.println("调用MyBeanFactoryPostProcessor的postProcessBeanFactory");
-        BeanDefinition bd = beanFactory.getBeanDefinition("httpUtils");
-
-        System.err.println("httpUtils是不是 singleTon: "+bd.isSingleton());
+//        BeanDefinition bd = beanFactory.getBeanDefinition("httpUtils");
+//
+//        System.err.println("httpUtils是不是 singleTon: "+bd.isSingleton());
     }
 }

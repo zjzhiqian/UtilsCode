@@ -13,7 +13,6 @@ import java.util.function.Function;
  * Created by hzq on 16/4/22.
  */
 
-@Component
 public class RedisLock {
 
     /**

@@ -59,8 +59,8 @@ public class TestController {
 
 
     @ResponseBody
-//    @ResponseStatus(code = HttpStatus.CONFLICT,reason = "理由")
-    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ResponseStatus(code = HttpStatus.CONFLICT,reason = "理由")
+//    @ResponseStatus(code = HttpStatus.CONFLICT)
     @RequestMapping(path = "/test", headers = {"Accept-Encoding"})
     public Date getById(HttpServletRequest request) {
         request.getSession().setAttribute("1", "2");

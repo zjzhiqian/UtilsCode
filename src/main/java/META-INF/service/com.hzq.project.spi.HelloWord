@@ -1,0 +1,3 @@
+com.hzq.project.spi.HelloWord
+com.hzq.project.spi.HelloWordHisImpl
+com.hzq.project.spi.HelloWordMyImpl

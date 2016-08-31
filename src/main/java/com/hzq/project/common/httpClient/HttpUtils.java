@@ -12,6 +12,7 @@ package com.hzq.project.common.httpClient;
 
 import java.io.IOException;
 
+import com.hzq.project.test.service.TestService;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
@@ -21,6 +22,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -30,13 +32,14 @@ import org.springframework.stereotype.Component;
  * httpClientUtil
  * Created by hzq on 16/4/22.
  */
-@Component
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-@Description("description")
+//@Component
+//@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+//@Description("description")
 public class HttpUtils implements InitializingBean {
 
     private static CloseableHttpClient httpclient = null;
     private static RequestConfig config = null;
+
 
 
     @Override

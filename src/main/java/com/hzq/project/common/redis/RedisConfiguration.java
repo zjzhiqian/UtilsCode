@@ -13,7 +13,7 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * Jedis Config  File
  */
-@Configuration
+//@Configuration
 @PropertySource("classpath:redis.properties")
 public class RedisConfiguration {
     /**

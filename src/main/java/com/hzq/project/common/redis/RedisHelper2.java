@@ -15,7 +15,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 
-@Component
 public class RedisHelper2 {
     private static final Logger logger = LoggerFactory.getLogger(RedisHelper2.class);
 
