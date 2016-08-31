@@ -36,15 +36,11 @@ public class ExecutorsTest {
         //执行shutDown操作时, 1.ctl本来值为: 11100000 00000000 00000000 00000002
         //                如果ctl > 0 时,ctl不变,否则 ctl设置为workerCount
         //                  2.所有线程都进行interrupt
-
-
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(3, 3, 14, TimeUnit.DAYS, new LinkedBlockingDeque<>(), r -> {
             Thread t = new Thread();
 //            t.setDaemon(true);
             return t;
         });
         threadPoolExecutor.prestartAllCoreThreads();
-
-
     }
 }
