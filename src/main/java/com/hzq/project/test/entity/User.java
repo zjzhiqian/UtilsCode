@@ -1,11 +1,20 @@
 package com.hzq.project.test.entity;
 
+import com.hzq.project.spi.impl.HelloWordHisImpl;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by hzq on 16/7/29.
  */
 public class User {
+
+    @Bean
+    HelloWordHisImpl HelloWordHis() {
+        return new HelloWordHisImpl();
+    }
 
     @NotNull(message = "用户名不能为空")
     private String name;

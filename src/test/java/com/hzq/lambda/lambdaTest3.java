@@ -35,6 +35,11 @@ public class lambdaTest3 {
      * stream
      */
     public void test01() {
+
+
+        strList.sort(comparing(String::toString).thenComparing(String::toString).thenComparingInt(str->str.indexOf("3")));
+
+
         Long count = strList.stream().filter(arg -> arg.length() > 3).count();
         Long count2 = strList.parallelStream().filter(arg -> arg.length() > 2).count();
 

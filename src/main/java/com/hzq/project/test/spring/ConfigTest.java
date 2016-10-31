@@ -1,12 +1,13 @@
 package com.hzq.project.test.spring;
 
+import com.hzq.project.common.redis.RedisLock;
 import com.hzq.project.test.entity.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ConfigurationClassPostProcessor;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
+import org.springframework.core.annotation.Order;
+import org.springframework.core.env.StandardEnvironment;
 
 import java.util.Date;
 
@@ -14,8 +15,21 @@ import java.util.Date;
  * Created by hzq on 16/10/31.
  */
 @Configuration
+@Order(1)
 @Import({User.class})
-public class ConfigTest {
+@PropertySource("classpath:mysql.properties")
+public class ConfigTest implements TtDefault{
+
+    @Value("${myname}")
+    private String myname;
+
+    public String getMyname() {
+        return myname;
+    }
+
+    public void setMyname(String myname) {
+        this.myname = myname;
+    }
 
     @Bean
     Date date() {
@@ -24,8 +38,10 @@ public class ConfigTest {
 
     public static void main(String[] args) {
         ConfigurationClassPostProcessor postProcessor = new ConfigurationClassPostProcessor();
+        postProcessor.setEnvironment(new StandardEnvironment());
         SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
         registry.registerBeanDefinition("test", new RootBeanDefinition(ConfigTest.class));
+//        registry.registerBeanDefinition("HzqConfig2", new RootBeanDefinition(HzqConfig2.class));
 
         //处理BeanDefinitionRegistry
         postProcessor.postProcessBeanDefinitionRegistry(registry);

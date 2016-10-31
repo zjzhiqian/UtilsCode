@@ -4,14 +4,19 @@ import com.google.common.collect.Lists;
 import com.hzq.entity.User;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.IntSupplier;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 
 /**
@@ -37,6 +42,11 @@ public class LambdaTest4 {
 
 
         Lists.newArrayList(1, 3, 4, 5).sort(comparing(Integer::toHexString).reversed().thenComparing(Integer::byteValue));
+
+        Map<String, List<Integer>> collect =
+                Lists.newArrayList(1, 3, 4, 5)
+                        .stream()
+                        .collect(groupingBy(Integer::toHexString));
 
 
         final Stream<int[]> limit = Stream.iterate(new int[]{0, 1}, t -> new int[]{t[1], t[0] + t[1]}).limit(3);

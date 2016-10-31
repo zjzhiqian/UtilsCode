@@ -3,8 +3,8 @@ package com.hzq.zookeeper.curator;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
-import org.apache.curator.test.TestingCluster;
-import org.apache.curator.test.TestingZooKeeperServer;
+//import org.apache.curator.test.TestingCluster;
+//import org.apache.curator.test.TestingZooKeeperServer;
 import org.apache.curator.utils.EnsurePath;
 import org.apache.curator.utils.ZKPaths;
 import org.apache.zookeeper.ZooKeeper;
@@ -69,16 +69,16 @@ public class curatorUtils {
      * testingServer
      */
     public void test03() throws Exception {
-        TestingCluster cluster = new TestingCluster(3);
-        cluster.start();
-        TimeUnit.SECONDS.sleep(3);
-        for (TestingZooKeeperServer server : cluster.getServers()) {
-            System.out.print(server.getInstanceSpec().getServerId() + "-");
-            System.out.print(server.getQuorumPeer().getServerState() + "-");
-            System.out.println(server.getInstanceSpec().getDataDirectory().getAbsolutePath());
-        }
-        TimeUnit.SECONDS.sleep(3333333);
-        cluster.stop();
+//        TestingCluster cluster = new TestingCluster(3);
+//        cluster.start();
+//        TimeUnit.SECONDS.sleep(3);
+//        for (TestingZooKeeperServer server : cluster.getServers()) {
+//            System.out.print(server.getInstanceSpec().getServerId() + "-");
+//            System.out.print(server.getQuorumPeer().getServerState() + "-");
+//            System.out.println(server.getInstanceSpec().getDataDirectory().getAbsolutePath());
+//        }
+//        TimeUnit.SECONDS.sleep(3333333);
+//        cluster.stop();
 
 
     }
