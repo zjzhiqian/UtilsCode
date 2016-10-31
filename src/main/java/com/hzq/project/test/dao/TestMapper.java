@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by hzq on 16/5/17.
  */
-@Repository
+//@Repository
 public interface TestMapper {
 
     Map getOne();

@@ -37,7 +37,7 @@
     <mvc:annotation-driven/>
 
 
-    <aop:config proxy-target-class="true"></aop:config>
+    <aop:config proxy-target-class="true"/>
     <aop:aspectj-autoproxy/>
 
 </beans>

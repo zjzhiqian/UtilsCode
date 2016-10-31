@@ -21,7 +21,6 @@ public class ABA {
     }
 
 
-
     /**
      * ABA存在的问题
      */
@@ -63,21 +62,23 @@ public class ABA {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            atomRef.compareAndSet(10, 11, atomRef.getStamp(), atomRef.getStamp() + 1);
+            int stamp = atomRef.getStamp();
+            atomRef.compareAndSet(10, 11, stamp, stamp + 1);
             System.out.println("targetChanged ->" + atomRef.getReference());
-            atomRef.compareAndSet(11, 10, atomRef.getStamp(), atomRef.getStamp() + 1);
+
+            stamp = atomRef.getStamp();
+            atomRef.compareAndSet(11, 10, stamp, stamp + 1);
             System.out.println("targetChanged ->" + atomRef.getReference());
         }).start();
 
         //线程2
         new Thread(() -> {
-            int stamp = atomRef.getStamp();
             try {
                 TimeUnit.SECONDS.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            boolean result = atomRef.compareAndSet(10,13,2,3);
+            boolean result = atomRef.compareAndSet(10, 13, 2, 3);
             System.out.println(result); // false
         }).start();
     }

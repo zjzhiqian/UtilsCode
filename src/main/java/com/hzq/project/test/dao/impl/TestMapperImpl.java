@@ -12,7 +12,7 @@ import java.util.Map;
  * testMapper
  * Created by hzq on 16/5/17.
  */
-//@Repository
+@Repository
 public class TestMapperImpl implements TestMapper {
     @Autowired
     private SqlSession sqlsession;
