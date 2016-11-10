@@ -1,22 +1,25 @@
 package com.hzq.bytebuddy;
 
-import com.fasterxml.jackson.databind.util.ClassUtil;
 import com.hzq.bytebuddy.entity.Father;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.NamingStrategy;
 import net.bytebuddy.description.type.TypeDescription;
+import net.bytebuddy.dynamic.ClassFileLocator;
 import net.bytebuddy.dynamic.DynamicType;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.matcher.ElementMatchers;
+import net.bytebuddy.pool.TypePool;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.function.Function;
 
+import static net.bytebuddy.matcher.ElementMatchers.*;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -28,7 +31,7 @@ public class Step01 {
     public void test01() throws IllegalAccessException, InstantiationException {
         Class<?> dynamicType = new ByteBuddy()
                 .subclass(Father.class)
-                .method(ElementMatchers.named("fatherEat"))
+                .method(named("fatherEat"))
                 .intercept(FixedValue.value("Hello World!"))
                 .make()
                 .load(getClass().getClassLoader())
@@ -44,7 +47,7 @@ public class Step01 {
     public void test02() throws IllegalAccessException, InstantiationException {
         Class<? extends Function> apply = new ByteBuddy()
                 .subclass(Function.class)
-                .method(ElementMatchers.named("apply"))
+                .method(named("apply"))
                 .intercept(MethodDelegation.to(new GreetingInterceptor()))
                 .make()
                 .load(getClass().getClassLoader())
@@ -100,13 +103,119 @@ public class Step01 {
     @Test
     /**
      * load一个 .class
+     * ClassLoader的策略:
+     * WRAPPER strategy creates a new, wrapping ClassLoader,
+     * CHILD_FIRST strategy creates a similar class loader with child-first semantics
+     * INJECTION strategy injects a dynamic type using reflection.
+
      */
-    public void test04() throws IllegalAccessException, InstantiationException {
+    public void test04() throws IllegalAccessException, InstantiationException, NoSuchFieldException {
+        Class<?> type = new ByteBuddy()
+                .subclass(Object.class)
+                .make()
+                .load(getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
+                .getLoaded();
+
+        TypePool pool = TypePool.Default.ofClassPath();
+        DynamicType.Loaded<Object> dynamicType = new ByteBuddy()
+                .redefine(pool.describe("com.hzq.bytebuddy.Bar").resolve(), ClassFileLocator.ForClassLoader.ofClassPath())
+                .defineField("name", String.class)
+                .make()
+                .load(ClassLoader.getSystemClassLoader());
+
+        assertThat(Bar.class.getDeclaredField("name"), notNullValue());
+
+    }
+
+
+    @Test
+    /**
+     * field and method
+     */
+    public void test05() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
+        String result = new ByteBuddy()
+                .subclass(Object.class)
+                .name("com.hzq.xxx")
+                .make()
+                .load(getClass().getClassLoader())
+                .getLoaded()
+                .newInstance()
+                .toString();
+        System.out.println(result);
+
+        String result2 = new ByteBuddy()
+                .subclass(Object.class)
+                .name("com.hzq.yyy2")
+                //参数是一个 ElementMatcher 获取一个选中method named("").and(returns(String.class).and(takesArguments(0)))
+                .method(named("").and(returns(String.class).and(takesArguments(0))))
+                //参数是一个 Implementation
+                .intercept(FixedValue.value("23"))  //覆盖实现  返回一个固定值
+                .make()
+                .load(getClass().getClassLoader())
+                .getLoaded()
+                .newInstance()
+                .toString();
+        System.out.println(result2);
+
+
+        String s = new ByteBuddy()
+                .subclass(Object.class)
+                .name("com.hzq.yyy")
+                .method(isDeclaredBy(Bar.class)).intercept(FixedValue.value("One!"))
+                .method(named("foo")).intercept(FixedValue.value("Two!"))
+                .method(named("foo").and(takesArguments(1))).intercept(FixedValue.value("Three!"))  //类的所有方法优先匹配最后一个,一次向上,所以最后一个应该是最具体的方法
+
+                //如果只想要定义一个新的方法,可以用.defineMethod
+//                .defineMethod(named("hzq"),)
+//                .intercept(FixedValue.value("123"))
+                .make()
+                .load(getClass().getClassLoader())
+                .getLoaded()
+                .newInstance()
+                .toString();
+
+
+        new ByteBuddy().subclass(Object.class)
+                .name("com.hzq.yyxy")
+                .method(named("toString"))
+                .intercept(FixedValue.value("1233"))
+                .make()
+                .saveIn(new File("/Users/hzq/Desktop"));
+
+
+        System.out.println("======================================================");
+        //方法代理,将Source.class的hello方法 通过Target.class的hello方法来实现
+        String helloWorld = new ByteBuddy()
+                .subclass(Source.class)
+                .method(named("hello")).intercept(MethodDelegation.to(Target.class))
+                .make()
+                .load(getClass().getClassLoader())
+                .getLoaded()
+                .newInstance()
+                .hello("World");
+        System.out.println(helloWorld);
 
     }
 
 }
 
+class Source {
+    public String hello(String name) {
+        return null;
+    }
+}
+
+class Target {
+    public static String hello(String name) {
+        return "Hello " + name + "!";
+    }
+}
 
 
+class Bar {
 
+    @ToString("")
+    public String toString() {
+        return "bar";
+    }
+}
