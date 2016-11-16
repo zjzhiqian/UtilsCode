@@ -4,12 +4,10 @@ import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.implementation.bind.annotation.Super;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import static net.bytebuddy.matcher.ElementMatchers.*;
 import static org.hamcrest.CoreMatchers.is;
@@ -69,8 +67,6 @@ public class Step02 {
                 .newInstance()
                 .toString("123"));
 
-        System.out.println("====================================================================");
-
 
     }
 
@@ -78,6 +74,12 @@ public class Step02 {
     /**
      *  方法匹配规则: 类的所有方法优先匹配最后一个,依次向上,所以最后一个应该是最具体的方法
      *  defineMethod("hzq", String.class, 2)method name,method return type ,method modifiers
+     *  匹配完成后绑定规则:
+     *      1. @IgnoreForBinding 的方法不会被绑定   @BindingPriority 高优先级的有限被绑定
+     *      2. 相同的方法名优先
+     *      3. 通过@Argument注解绑定到了 过滤到了两个相同的方法  更具体(more specific)的参数 优先被绑定  (和java编译器的算法相同)
+     *      4. 参数同等specific 绑定了更多参数的方法优先
+     *
      */
     public void test02() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
         DynamicType.Unloaded<Foo> unloaded = new ByteBuddy()
@@ -113,7 +115,7 @@ public class Step02 {
      * now, we settle for mentioning that you can define such custom assigners by calling withAssigner
      * on any FixedValue implementation.
      */
-    public void test04() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
+    public void test03() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
 
     }
 
@@ -123,7 +125,7 @@ public class Step02 {
      *  Byte Buddy does not require target methods to be named equally to a source method.
      *
      */
-    public void test05() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
+    public void test04() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
         DynamicType.Unloaded<Source> unloaded = new ByteBuddy()
                 .subclass(Source.class)
                 .name("com.hzq.bytebuddy.yyy5")
@@ -144,7 +146,7 @@ public class Step02 {
      *  @AllArguments 的使用方法
      *  @This 注解的用法  A typical reason for using the @This annotation to gain access to an instance's fields.
      */
-    public void test06() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
+    public void test05() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
         DynamicType.Unloaded<Source> unloaded1 = new ByteBuddy()
                 .subclass(Source.class)
                 .name("com.hzq.bytebuddy.yyy6")
@@ -172,11 +174,11 @@ public class Step02 {
                 .test1("first", "second", "third"));
 
         System.out.println("=================================");
+        //@this
         DynamicType.Unloaded<Foo2> unloaded = new ByteBuddy()
                 .subclass(Foo2.class)
                 .name("com.hzq.bytebuddy.yyy8")
-                .method(isDeclaredBy(Foo2.class))
-                .intercept(MethodDelegation.to(Bar2.class))
+                .method(isDeclaredBy(Foo2.class)).intercept(MethodDelegation.to(Bar2.class))
                 .make();
         unloaded.saveIn(new File(PATH));
         Foo2 instance = unloaded.load(getClass().getClassLoader()).getLoaded().newInstance();
@@ -203,44 +205,11 @@ public class Step02 {
      *  using these constants must at least be of Java version 7. When using the @Origin annotation on a
      *  parameter of type int, it is assigned the modifier of the instrumented method.
      */
-    public void test07() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
+    public void test06() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
 
 
     }
 
-    @Test
-    /**
-     * access to the super implementations of a dynamic type's methods.
-     */
-    public void test08() throws IllegalAccessException, InstantiationException, NoSuchFieldException, IOException {
-        DynamicType.Unloaded<MemoryDatabase> unloaded = new ByteBuddy()
-                .subclass(MemoryDatabase.class)
-                .name("com.hzq.bytebuddy.yyy9")
-                .method(named("load")).intercept(MethodDelegation.to(LoggerInterceptor.class))
-                .make();
-        unloaded.saveIn(new File(PATH));
-        //interceptor增强,然后进行输出
-        unloaded.load(getClass().getClassLoader())
-                .getLoaded()
-                .newInstance()
-                .load("start");
-
-        System.out.println("====================================================");
-
-        DynamicType.Unloaded<MemoryDatabase> unloaded2 = new ByteBuddy()
-                .subclass(MemoryDatabase.class)
-                .name("com.hzq.bytebuddy.yyy10")
-                .method(named("load")).intercept(MethodDelegation.to(LoggerInterceptor.class))
-                .make();
-        unloaded2.saveIn(new File(PATH));
-
-        unloaded2.load(getClass().getClassLoader())
-                .getLoaded()
-                .newInstance()
-                .load("start");
-
-
-    }
 
 
 }

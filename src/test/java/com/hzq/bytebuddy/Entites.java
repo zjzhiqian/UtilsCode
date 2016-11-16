@@ -1,17 +1,19 @@
 package com.hzq.bytebuddy;
 
+import com.hzq.bytebuddy.entitypack.DefaultMethod;
 import net.bytebuddy.implementation.bind.annotation.*;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 /**
  * Entites
  * Created by hzq on 16/11/9.
  */
 public class Entites {
+
 
 }
 
@@ -46,7 +48,7 @@ class Source {
 
 class Target {
 
-    public static String hello(String name, Method method) {
+    public static String hello(String name, @Origin Method method) {
         return "Hello " + name + "!";
     }
 
@@ -153,6 +155,66 @@ class ChangingLoggerInterceptor {
         System.out.println("Calling database");
         try {
             return zuper.load(info + " (logged access)");
+        } finally {
+            System.out.println("Returned from database");
+        }
+    }
+}
+
+
+class Loop {
+    public String loop(String value) {
+        return value + 1;
+    }
+
+    public int loop(int value) {
+        return value + 1;
+    }
+}
+
+
+class Interceptor {
+    @RuntimeType
+    public static Object intercept(@RuntimeType Object value) {
+        System.out.println("Invoked method with: " + value);
+        return value;
+    }
+}
+
+
+class RunnableClass {
+    public static Object intercept(@DefaultCall Runnable runnable) {
+        System.out.println("before Invoked method ");
+        runnable.run();
+        return "123";
+    }
+}
+
+
+class DefaultCallSuper {
+    public static Object log(@Super DefaultMethod method) {
+        System.out.println("Calling database");
+        try {
+            return method.caca();
+        } finally {
+            System.out.println("Returned from database");
+        }
+    }
+}
+
+class ForwardingLoggerInterceptor {
+
+    private MemoryDatabase memoryDatabase;
+
+    ForwardingLoggerInterceptor(MemoryDatabase memoryDatabase) {
+        this.memoryDatabase = memoryDatabase;
+    }
+
+
+    public List<String> log(@Pipe Function<MemoryDatabase, List<String>> pipe) {
+        System.out.println("Calling database");
+        try {
+            return pipe.apply(memoryDatabase);
         } finally {
             System.out.println("Returned from database");
         }
