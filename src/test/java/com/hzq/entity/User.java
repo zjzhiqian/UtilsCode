@@ -1,6 +1,9 @@
 package com.hzq.entity;
 
+import com.google.common.collect.Lists;
 import org.msgpack.annotation.MessagePackBeans;
+
+import java.util.ArrayList;
 
 /**
  * Created by hzq on 16/7/5.
@@ -23,7 +26,9 @@ public class User {
     }
 
 
-    public User(){}
+    public User() {
+    }
+
     public boolean isHigh() {
         return true;
     }
