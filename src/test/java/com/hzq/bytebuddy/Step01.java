@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.util.ClassUtil;
 import com.hzq.bytebuddy.entity.Father;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.NamingStrategy;
+import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.description.type.TypeDescription;
 import net.bytebuddy.dynamic.DynamicType;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -13,6 +16,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.function.Function;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -102,11 +106,49 @@ public class Step01 {
      * load一个 .class
      */
     public void test04() throws IllegalAccessException, InstantiationException {
+        Class<?> type = new ByteBuddy()
+                .subclass(Object.class)
+                .make()
+                .load(getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
+//        WRAPPER strategy creates a new, wrapping ClassLoader,
+//        CHILD_FIRST strategy creates a similar class loader with child-first semantics
+//        INJECTION strategy injects a dynamic type using reflection
+
+                .getLoaded();
+
+        InputStream stream = type.getResourceAsStream("/Users/hzq/Documents/old/UtilsCode/pom.xml");
+        System.out.println(1);
+    }
+
+//    based on the provided class loader and creates a new class loader only for the bootstrap class loader where no type can be injected using reflection which is otherwise the default
+
+    @Test
+    /**
+     * reloading a class  (JVM's HOT-SWAP)
+     */
+    public void test05() throws IllegalAccessException, InstantiationException {
+        ByteBuddyAgent.install();
+        Foo foo = new Foo();
+        new ByteBuddy()
+                .redefine(Bar.class)
+                .name(Foo.class.getName())
+                .make()
+                .load(Foo.class.getClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
+        assertThat(foo.m(), is("bar"));
 
     }
 
 }
 
 
+class Foo {
+    String m() {
+        return "foo";
+    }
+}
 
-
+class Bar {
+    String m() {
+        return "bar";
+    }
+}
