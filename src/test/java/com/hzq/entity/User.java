@@ -1,15 +1,28 @@
 package com.hzq.entity;
 
-import com.google.common.collect.Lists;
 import org.msgpack.annotation.MessagePackBeans;
 
-import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by hzq on 16/7/5.
  */
 @MessagePackBeans
 public class User {
+
+    private static User u = null;
+
+    public static User getInstance() {
+        if (u == null) {
+            synchronized (User.class) {
+                if (u == null) {
+                    u = new User(5);
+                }
+            }
+
+        }
+        return u;
+    }
 
     private Integer age;
 
@@ -23,10 +36,13 @@ public class User {
 
     public User(Integer age) {
         this.age = age;
-    }
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.age = 9;
 
-
-    public User() {
     }
 
     public boolean isHigh() {
@@ -49,10 +65,23 @@ public class User {
         return null;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
                 "age=" + age +
                 '}';
+    }
+
+
+    public static void main(String[] args) {
+        new Thread(()->{
+            System.out.println(User.getInstance());
+        }).start();
+
+        new Thread(()->{
+            System.out.println(User.getInstance());
+        }).start();
+
     }
 }

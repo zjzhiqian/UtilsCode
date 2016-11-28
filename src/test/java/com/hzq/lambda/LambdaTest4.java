@@ -30,8 +30,8 @@ public class LambdaTest4 {
         //返回值是boolean 可以用Predicate 或  Function<User, Boolean> 接收
         final Function<User, Boolean> isHigh = User::isHigh;
         Predicate<User> us = User::isHigh;
-        System.out.println(isHigh.apply(new User()));
-        System.out.println(us.test(new User()));
+        System.out.println(isHigh.apply(new User(5)));
+        System.out.println(us.test(new User(5)));
 
         final IntPredicate intPredicate = (int i) -> i % 2 == 0;
         System.out.println(intPredicate.test(100000));
@@ -56,8 +56,6 @@ public class LambdaTest4 {
 
         final Predicate<User> isHigh1 = User::isHigh;
         isHigh1.and(User::isHigh).or(User::isHigh);
-
-
     }
 
 }

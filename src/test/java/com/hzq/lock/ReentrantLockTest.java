@@ -9,21 +9,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ReentrantLockTest {
 
 
-    public static void main(String[] args){
-
-
+    public static void main(String[] args) {
         Lock l = new ReentrantLock();
-
         new Thread(l::lock).start();
-
-
-
         new Thread(l::lock).start();
-
-
-
-
-
-
     }
 }

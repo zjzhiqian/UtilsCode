@@ -1,14 +1,10 @@
 package com.hzq.project.test.spring;
 
-import com.hzq.project.common.redis.RedisLock;
+import com.hzq.project.test.dao.TestMapper;
 import com.hzq.project.test.entity.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.support.RootBeanDefinition;
-import org.springframework.beans.factory.support.SimpleBeanDefinitionRegistry;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.StandardEnvironment;
 
 import java.util.Date;
 
@@ -38,22 +34,12 @@ public class ConfigTest implements TtDefault{
     }
 
     public static void main(String[] args) {
-
-        ConfigurationClassPostProcessor postProcessor = new ConfigurationClassPostProcessor();
-        postProcessor.setEnvironment(new StandardEnvironment());
-//        SimpleBeanDefinitionRegistry registry = new SimpleBeanDefinitionRegistry();
-        DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
-        factory.registerBeanDefinition("test", new RootBeanDefinition(ConfigTest.class));
-//        registry.registerBeanDefinition("HzqConfig2", new RootBeanDefinition(HzqConfig2.class));
-
-        //处理BeanDefinitionRegistry
-        postProcessor.postProcessBeanDefinitionRegistry(factory);
-
-        postProcessor.postProcessBeanFactory(factory);
-
-        //输出结果
-        System.out.println(factory.getBeanDefinition("test"));//可以输出
-        System.out.println(factory.getBeanDefinition("date"));//可以输出
-        System.out.println(factory.getBeanDefinition("user"));//可以输出
+        ClassLoader loader = User.class.getClassLoader();
+        ClassLoader loader1 = TestMapper.class.getClassLoader();
+        System.out.println(loader.equals(loader1));
     }
+
+
+
+
 }
