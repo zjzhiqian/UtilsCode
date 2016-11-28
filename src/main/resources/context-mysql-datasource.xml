@@ -3,10 +3,14 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns="http://www.springframework.org/schema/beans"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 					    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 					    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-					    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+					    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/cache
+        http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <!-- 避免与springMVC容器初始化多次 使用context:exclude-filter,context:include-filter -->
     <context:component-scan base-package="com.hzq">
@@ -48,7 +52,7 @@
 
     <bean id="simpleSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="master"/>
-        <property name="mapperLocations" value="classpath:com/hzq/project/**/**/mapper/*Mapper.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
 
@@ -64,10 +68,36 @@
 
     <!--<context:load-time-weaver/>-->
 
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy proxy-target-class="true" expose-proxy="true"/>
 
     <bean id="processor" class="com.hzq.project.common.beanFactoryProcessors.MyBeanFactoryPostProcessor"/>
 
     <bean id="beanPro" class="com.hzq.project.common.beanFactoryProcessors.MyBeanPostProcessor"/>
+
+
+    <cache:annotation-driven/>
+
+    <!-- generic cache manager -->
+    <bean id="simpleCacheManager"
+          class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="default"/>
+                <!--<bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="accountCache"/>-->
+            </set>
+        </property>
+    </bean>
+
+
+    <!-- 配置找不到cache时 默认不使用cache-->
+    <bean id="cacheManager"
+          class="org.springframework.cache.support.CompositeCacheManager" primary="true">
+        <property name="cacheManagers">
+            <list>
+                <ref bean="simpleCacheManager"/>
+            </list>
+        </property>
+        <property name="fallbackToNoOpCache" value="true"/>
+    </bean>
 
 </beans>

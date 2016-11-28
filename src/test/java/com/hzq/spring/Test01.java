@@ -1,8 +1,13 @@
 package com.hzq.spring;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.hzq.project.test.entity.Account;
+import com.hzq.project.test.service.CartService;
+import com.hzq.project.test.service.impl.AccountService;
 import com.hzq.project.test.spring.ConfigTest;
 import com.sun.tools.javac.util.Convert;
 import org.junit.Test;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.*;
@@ -11,7 +16,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.SimpleMetadataReaderFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 
 import static org.junit.Assert.assertTrue;
@@ -85,7 +92,43 @@ public class Test01 {
     }
 
 
+    @Test
+    /**
+     *  测试 @EnableCaching注解
+     */
+    public void test05() throws InterruptedException, IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context-mysql-datasource.xml");
+        AccountService service = context.getBean("accountService", AccountService.class);
+        service.getAccountByName("h");
+        service.getAccountByName("h");
+        System.out.println("=====================");
+        service.updateAccount(new Account("h"));
+        service.getAccountByName("h");
+        service.getAccountByName("h");
 
+    }
+
+
+    @Test
+    /**
+     *  测试 事务
+     */
+    public void test06() throws InterruptedException, IOException {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context-mysql-datasource.xml");
+        CartService service = context.getBean("cartServiceImpl", CartService.class);
+
+        SqlSessionTemplate template = context.getBean("sqlSessionTemplate", SqlSessionTemplate.class);
+        template.get
+
+        //①.检查数据源autoCommit的设置
+//        System.out.println("autoCommit:" + dataSource.getDefaultAutoCommit());
+
+        service.addCount(354, 1);
+
+    }
+
+
+//    <cache:annotation-driven />
 
 
 }

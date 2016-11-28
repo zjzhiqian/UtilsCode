@@ -3,6 +3,7 @@ package com.hzq.project.test.spring;
 import com.hzq.project.test.dao.TestMapper;
 import com.hzq.project.test.entity.User;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.*;
 import org.springframework.core.annotation.Order;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 @Order(1)
 @Import({User.class})
 @PropertySource("classpath:mysql.properties")
+@EnableCaching
 public class ConfigTest implements TtDefault{
 
     @Value("${myname}")

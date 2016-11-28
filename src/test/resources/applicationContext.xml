@@ -2,8 +2,12 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns="http://www.springframework.org/schema/beans"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-					    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+					    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <context:component-scan base-package="com.hzq.project.**.dao"/>
 
@@ -57,6 +61,25 @@
 
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" lazy-init="true" scope="prototype">
         <constructor-arg ref="simpleSqlSessionFactory"/>
+    </bean>
+
+
+    <cache:annotation-driven/>
+
+
+    <!-- generic cache manager -->
+    <bean id="cacheManager"
+          class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                        p:name="default"/>
+
+                <bean
+                        class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                        p:name="accountCache"/>
+            </set>
+        </property>
     </bean>
 
 </beans>
