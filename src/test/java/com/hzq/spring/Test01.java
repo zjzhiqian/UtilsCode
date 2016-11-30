@@ -99,7 +99,7 @@ public class Test01 {
      *  测试 @EnableCaching注解
      */
     public void test05() throws InterruptedException, IOException {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context-mysql-datasource.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("aopTest.xml");
         AccountService service = context.getBean("accountService", AccountService.class);
         service.getAccountByName("h");
         service.getAccountByName("h");
@@ -107,7 +107,6 @@ public class Test01 {
         service.updateAccount(new Account("h"));
         service.getAccountByName("h");
         service.getAccountByName("h");
-
     }
 
 
@@ -132,35 +131,14 @@ public class Test01 {
 //    <cache:annotation-driven />
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Test
-    public void test07 (){
+    public void test07() {
         SimpleAliasRegistry registry = new SimpleAliasRegistry();
 //        registry.registerAlias("a","c");
 //        registry.registerAlias("c","a");
 
         DefaultSingletonBeanRegistry beanRegistry = new DefaultSingletonBeanRegistry();
-        beanRegistry.registerSingleton("ad",new User(1));
-        beanRegistry.registerSingleton("ad",new User(2));
+        beanRegistry.registerSingleton("ad", new User(1));
+        beanRegistry.registerSingleton("ad", new User(2));
     }
 }
