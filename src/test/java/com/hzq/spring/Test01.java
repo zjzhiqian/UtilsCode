@@ -1,6 +1,7 @@
 package com.hzq.spring;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.hzq.entity.User;
 import com.hzq.project.test.entity.Account;
 import com.hzq.project.test.service.CartService;
 import com.hzq.project.test.service.impl.AccountService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.*;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.SimpleAliasRegistry;
 import org.springframework.core.env.StandardEnvironment;
 import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.SimpleMetadataReaderFactory;
@@ -118,7 +120,6 @@ public class Test01 {
         CartService service = context.getBean("cartServiceImpl", CartService.class);
 
         SqlSessionTemplate template = context.getBean("sqlSessionTemplate", SqlSessionTemplate.class);
-        template.get
 
         //①.检查数据源autoCommit的设置
 //        System.out.println("autoCommit:" + dataSource.getDefaultAutoCommit());
@@ -131,4 +132,35 @@ public class Test01 {
 //    <cache:annotation-driven />
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @Test
+    public void test07 (){
+        SimpleAliasRegistry registry = new SimpleAliasRegistry();
+//        registry.registerAlias("a","c");
+//        registry.registerAlias("c","a");
+
+        DefaultSingletonBeanRegistry beanRegistry = new DefaultSingletonBeanRegistry();
+        beanRegistry.registerSingleton("ad",new User(1));
+        beanRegistry.registerSingleton("ad",new User(2));
+    }
 }
