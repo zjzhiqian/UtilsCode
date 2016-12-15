@@ -1,10 +1,13 @@
 package com.hzq.project.test.service.impl;
 
 import com.hzq.project.test.entity.Account;
+import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +15,11 @@ import org.springframework.stereotype.Service;
  */
 @Service("accountService")
 public class AccountService  implements InitializingBean{
+
+    @Autowired
+    Environment environment;
+
+
     private MyCacheManager<Account> cacheManager;
 
     public AccountService() {
@@ -28,7 +36,6 @@ public class AccountService  implements InitializingBean{
 //    @CachePut(value="default",key="#account.getName()")// 更新 accountCache 缓存
     public void updateAccount(Account account) {
         updateDb(account);
-
     }
 
 

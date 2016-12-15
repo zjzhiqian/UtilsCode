@@ -32,9 +32,9 @@ public class MTree<T extends Comparable> {
 
     private BinaryNode<T> insert(BinaryNode<T> root, T element) {
         if (root == null) {
-            BinaryNode node = new BinaryNode();
-            node.data = element;
-            return node;
+            root = new BinaryNode();
+            root.data = element;
+            return root;
         }
         Integer comp = root.data.compareTo(element);
         if (comp > 0) root.left = insert(root.left, element);

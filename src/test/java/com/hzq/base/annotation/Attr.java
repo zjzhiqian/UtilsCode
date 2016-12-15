@@ -10,7 +10,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface Attr {
-
     String value() default "213";
 }
 

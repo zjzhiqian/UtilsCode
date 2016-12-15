@@ -12,12 +12,10 @@ public class QueueTest {
 
     @Test
     public void test01() {
-
         ArrayBlockingQueue<Object> queue = new ArrayBlockingQueue<>(2);
         queue.add(3);
 //        queue.add(4);
 //        queue.add(5);
-
         queue.poll();
     }
 
