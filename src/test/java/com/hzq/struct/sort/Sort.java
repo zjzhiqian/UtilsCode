@@ -1,10 +1,14 @@
 package com.hzq.struct.sort;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.After;
 import org.junit.Test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.StringJoiner;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 /**
  * 各种排序算法
@@ -27,25 +31,14 @@ public class Sort {
      * 冒泡排序
      */
     public void test01() {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[i]) {
-                    int tmp = arr[j];
-                    arr[j] = arr[i];
-                    arr[i] = tmp;
-                }
-            }
-        }
+
     }
 
     //      1  2  3  4  6  7  8  <-----5
     @Test
-    /**
-     * 插入排序 (逆序数, N个互异数的平均逆序数N*(N-1)/2)
-     */
     public void test02() {
+        int j;
         for (int i = 0; i < arr.length; i++) {
-            int j;
             int tmp = arr[i];
             for (j = i; j > 0 && arr[j - 1] > tmp; j--) {
                 arr[j] = arr[j - 1];
@@ -55,23 +48,44 @@ public class Sort {
     }
 
     @Test
-    /**
-     * 插入排序另一种形式
-     */
     public void test03() {
-        int j = 0;
-        for (int i = 0; i < arr.length - 1; j = ++i) {
-            int tmp = arr[i + 1];
-            while (tmp < arr[j]) {
-                arr[j + 1] = arr[j];
-                if (j-- == 0) {
-                    break;
-                }
+//        for (int i = 0, j = i + 1; i < arr.length; j = ++i) {
+//            int tmp = arr[j];
+//            while (tmp < arr[j - 1]) {
+//                arr[j] = arr[j - 1];
+//                if (j-- == 0) break;
+//            }
+//            arr[j] = tmp;
+//        }
+
+
+        for (int i = 0, j = i + 1; i < arr.length; j = ++i) {
+            int tmp = arr[j];
+            while (tmp < arr[j - 1]) {
+                arr[j] = arr[j - 1];
+                if (j-- == 0) break;
             }
-            arr[j + 1] = tmp;
+            arr[j] = tmp;
         }
 
 
     }
 
+    private String encrypt(String content, Integer position) {
+        int z = 'Z';
+        char[] chars = new char[content.length()];
+        IntStream.range(0, content.length()).forEach(index -> {
+            char c = content.charAt(index);
+            int d = c + position <= z ? c + position : c + position - 26;
+            chars[index] = (char) d;
+        });
+        return new String(chars);
+    }
+
+    @Test
+    public void test04() throws Exception {
+        System.out.println(Integer.toBinaryString('A'));
+        System.out.println(Integer.toBinaryString('B'));
+        System.out.println(encrypt("ABCFE", 4));
+    }
 }

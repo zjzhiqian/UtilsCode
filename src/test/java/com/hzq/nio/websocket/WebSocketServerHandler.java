@@ -113,7 +113,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
         if (logger.isLoggable(Level.FINE)) {
             logger.fine(String.format("%s received %s", ctx.channel(), request));
         }
-        ctx.channel().write(new TextWebSocketFrame(request + " , 欢迎使用Netty WebSocket服务，现在时刻：" + new java.util.Date().toString()));
+        ctx.channel().write(new TextWebSocketFrame(request + " , 欢迎使用WebSocket服务"));
     }
 
     private static void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, FullHttpResponse res) {

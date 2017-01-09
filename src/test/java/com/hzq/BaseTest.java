@@ -107,6 +107,24 @@ public class BaseTest {
         return IntStream.range(2, nextRoot).anyMatch(i -> next % i == 0);
     }
 
+    @Test
+    public void test03(){
+        UU uu = new UU();
+        uu.setAge(3);
+        UU uu2= new UU();
+        uu2.setAge(4);
+        UU uu3 = new UU();
+        uu3.setAge(2);
+        PriorityQueue<UU> queue = new PriorityQueue<>();
+        queue.add(uu);
+        queue.add(uu2);
+        queue.add(uu3);
+
+
+
+    }
+
+
 
 
 

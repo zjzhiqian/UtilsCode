@@ -1,4 +1,4 @@
-package com.hzq.nio.nio;
+package com.hzq.nio;
 
 import org.junit.Test;
 
@@ -10,29 +10,47 @@ import java.nio.channels.FileChannel;
  * fileChannel Test类
  * Created by hzq on 16/7/19.
  */
-public class FileChannelTest {
+public class TestFileChannel {
+
+    @Test
+    public void test00() throws Exception {
+        String file = "/Users/hzq/Desktop/aa.txt";
+        RandomAccessFile rf = new RandomAccessFile(file, "rw");
+        for (int i = 0; i < 10; i++) {//写入基本类型double数据
+            rf.writeDouble(i * 1.414);
+        }
+        rf.close();
+        rf = new RandomAccessFile(file, "rw"); //直接将文件指针移到第5个double数据后面
+        rf.seek(5 * 8);
+        // 覆盖第6个double数据
+        rf.writeDouble(47.0001);
+        rf.close();
+        rf = new RandomAccessFile(file, "r");
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Value " + i + ": " + rf.readDouble());
+        }
+        rf.close();
+
+    }
+
 
     @Test
     /**
      * 写文件到Buffer,并且输入
      */
     public void test01() throws Exception {
-        RandomAccessFile accessFile = new RandomAccessFile("/Users/hzq/Documents/UtilsCode/pom.xml", "rw");
+        RandomAccessFile accessFile = new RandomAccessFile("/Users/hzq/Documents/UtilCode/pom.xml", "rw");
         FileChannel channel = accessFile.getChannel();
-        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-
-        int read = channel.read(byteBuffer);
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        int read = channel.read(buffer);
         while (read != -1) {
-            byteBuffer.flip();
-
-            while (byteBuffer.hasRemaining()) {
-                System.out.print((char) byteBuffer.get());
+            buffer.flip();
+            while (buffer.hasRemaining()) {
+                System.out.print((char) buffer.get());
             }
-            byteBuffer.clear();
-            read = channel.read(byteBuffer);
+            buffer.clear();
+            read = channel.read(buffer);
         }
-        accessFile.close();
-
     }
 
 
