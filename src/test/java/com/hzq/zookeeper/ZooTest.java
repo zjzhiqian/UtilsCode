@@ -22,6 +22,7 @@ public class ZooTest {
         //参数5:  两个参数 sessionId sessionPsw 确定一个会话
         ZooKeeper zooKeeper = new ZooKeeper("192.168.29.103:2181", 3000, event -> {
             System.out.println("watching event change :    " + event);
+//            event.getType();event.getType()
             if (Watcher.Event.KeeperState.SyncConnected == event.getState()) {
                 latch.countDown();
                 System.out.println("countDown");
@@ -41,7 +42,7 @@ public class ZooTest {
 
         //异步创建 callBack 和 context
         zooKeeper.create("/test", "data".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL, (rc, path1, ctx, name) -> {
-            //rc 0:调用成功 -4:客户端与服务端连接断开 -110:指定节点已存在 -112:会话已过去
+            //rc 0:调用成功 -4:客户端与服务端连接断开 -110:指定节点已存在 -112:会话已过期
             //path1 节点路径参数值
             //ctx 第四个参数 ctx
             //name 节点路径
@@ -70,9 +71,7 @@ public class ZooTest {
             try {
 //                event.getType()= Watcher.Event.EventType.NodeChildrenChanged
                 System.out.println(zooKeeper.getChildren(event.getPath(), true));
-            } catch (KeeperException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (KeeperException | InterruptedException e) {
                 e.printStackTrace();
             }
         });

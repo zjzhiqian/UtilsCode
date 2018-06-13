@@ -1,19 +1,53 @@
 package com.hzq.lambda;
 
+import com.hzq.entity.User;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.*;
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.function.*;
+import java.util.stream.Collector;
+import java.util.stream.Stream;
 
 /**
  * Created by hzq on 16/5/20.
  */
 public class LambdaTest1 {
+
+
+    public void test00() {
+
+//        (Supplier<List<T>>) ArrayList::new, List::add,
+//                (left, right) -> { left.addAll(right); return left; },
+//                CH_ID
+
+//        Stream.of()
+//        Stream.empty()
+
+//        *     R container = collector.supplier().get();
+//        *     for (T t : data)
+//        *         collector.accumulator().accept(container, t);
+//        *     return collector.finisher().apply(container);
+
+//        public static<T, R> Collector<T, R, R> of(Supplier<R> supplier,
+//                BiConsumer<R, T> accumulator,
+//                BinaryOperator<R> combiner,
+//                Collector.Characteristics... characteristics) {
+
+
+        Collector<User, List<User>, List<User>> aNew = Collector.of(ArrayList::new, List::add,
+                (left, right) -> {
+                    left.addAll(right);
+                    return left;
+                });
+
+//        Supplier<A> supplier,
+//        BiConsumer<A, T> accumulator,
+//        BinaryOperator<A> combiner,
+//        Function<A, R> finisher,
+//        Collector.Characteristics... characteristics
+
+    }
 
 
     @Test
